@@ -38,9 +38,10 @@
     background-color: #fb7185;
     padding: 1em;
     font-weight: 700;
-    color: #B2BAC2;
+    color: white;
     text-align: center;
     border: 5px solid;
+    border-color: gray;
     border-radius: 10px;
 }
 
