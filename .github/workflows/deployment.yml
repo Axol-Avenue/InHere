@@ -47,5 +47,5 @@ jobs:
             tar -xf deploy.tar.gz
             cd build/InHere/
             npm run build
-            cp /home/ubuntu/build/InHere/dist/* /var/www/html/
+            cp -a /home/ubuntu/build/InHere/dist/. /var/www/html/
             rm -r dist/
