@@ -24,7 +24,7 @@ jobs:
         run: |
           mkdir ../build
           cp -TR . ../build
-          tar -cvf deploy.tar ../build/
+          tar -czvf deploy.tar.gz ../build/
 
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
