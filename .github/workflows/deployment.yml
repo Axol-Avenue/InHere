@@ -43,4 +43,7 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             tar -xf deploy.tar.gz
+            cd build/InHere/
+            npm run build
             mv /home/ubuntu/InHere/InHere/dist/* ${{ secrets.TARGET }}
+            rm -r dist/
