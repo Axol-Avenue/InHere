@@ -47,5 +47,5 @@ jobs:
             tar -xf deploy.tar.gz
             cd build/InHere/
             npm run build
-            mv /home/ubuntu/build/InHere/dist/* $Target
+            mv -v /home/ubuntu/build/InHere/dist/* $Target
             rm -r dist/
