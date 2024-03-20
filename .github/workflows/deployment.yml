@@ -35,5 +35,13 @@ jobs:
           source: "deploy.tar.gz"
           target: ${{ secrets.TARGET }}
 
-
-
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            tar -xf deploy.tar.gz
+            mv /home/ubuntu/InHere/InHere/dist/* ${{ secrets.TARGET }}
