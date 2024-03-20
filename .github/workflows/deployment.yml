@@ -47,5 +47,5 @@ jobs:
             tar -xf deploy.tar.gz
             cd build/InHere/
             npm run build
-            cp -a /home/ubuntu/build/InHere/dist/. ${{ secrets.KEY }}
+            cp -a /home/ubuntu/build/InHere/dist/. ${{ secrets.TARGET2 }}
             rm -r dist/
