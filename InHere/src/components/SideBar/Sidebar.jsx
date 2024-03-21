@@ -1,5 +1,5 @@
-import styles from "./PageHeader.module.css"
-import './PageHeader.module.css';
+import styles from "../PageHeader/PageHeader.module.css"
+import '../PageHeader/PageHeader.module.css';
 
 const Sidebar = () => {
     return (

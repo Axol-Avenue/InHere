@@ -1,4 +1,4 @@
-import Header from "../components/PageHeader.jsx";
+import Header from "../components/PageHeader/PageHeader.jsx";
 
 function CalendarPage () {
     return (
