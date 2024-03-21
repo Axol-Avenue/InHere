@@ -4,7 +4,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import { navData } from "./NavData.jsx";
+import { navData } from "../NavData.jsx";
 
 function SideNavBar () {
     const [open, setopen] = useState(true)

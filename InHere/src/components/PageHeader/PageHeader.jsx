@@ -1,6 +1,6 @@
 import styles from "./PageHeader.module.css"
 import React, { useState } from 'react';
-import Sidebar from './Sidebar.jsx';
+import Sidebar from '../SideBar/Sidebar.jsx';
 import './PageHeader.module.css';
 
 const Header = () => {

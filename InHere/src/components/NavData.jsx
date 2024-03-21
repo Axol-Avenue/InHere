@@ -1,21 +1,25 @@
 export const navData = [
     {
         id: 0,
-        text: "Home",
+        text: "Login",
         link: "/"
+    },{
+        id: 1,
+        text: "Home",
+        link: "homePage"
     },
     {
-        id: 1,
+        id: 2,
         text: "Task Tracker",
         link: "taskTracker"
     },
     {
-        id: 2,
+        id: 3,
         text: "Event Statistics",
         link: "eventStats"
     },
     {
-        id: 3,
+        id: 4,
         text: "Calendar",
         link: "calendar"
     }
