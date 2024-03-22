@@ -5,6 +5,7 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { navData } from "../NavData.jsx";
+import LogoutButton from "../Logout/LogoutButton.jsx";
 
 function SideNavBar () {
     const [open, setopen] = useState(true)
@@ -23,6 +24,7 @@ function SideNavBar () {
                     <span className={styles.linkText}>{item.text}</span>
                 </NavLink>
             })}
+            <LogoutButton/>
         </div>
     )
 }
