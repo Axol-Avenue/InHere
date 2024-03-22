@@ -3,7 +3,6 @@ import "./HomePage.css"
 function HomePage () {
     return (
         <div className="pageLayout">
-            <h1>HomePage</h1>
             <span className="gridBackground">
                 <div className="pageContent">
                     <div className="item item-1">Item TESTING SHIT</div>
