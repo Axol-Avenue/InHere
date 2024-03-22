@@ -3,9 +3,8 @@ body {
     padding: 0;
 }
 .App {
-    display: flex;
-    flex-wrap: wrap;
+
 }
 main {
-    flex-grow: 1;
+
 }

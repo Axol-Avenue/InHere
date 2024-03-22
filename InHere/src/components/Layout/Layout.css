@@ -1,0 +1,17 @@
+.Layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 75px 1fr;
+    grid-template-areas:
+    "sidebar header"
+    "sidebar main";
+}
+.Header {
+    grid-area: header;
+}
+.SideNavBar {
+    grid-area: sidebar;
+}
+.main {
+    grid-area: main;
+}
