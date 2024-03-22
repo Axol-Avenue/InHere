@@ -8,7 +8,7 @@ function LoginButton( {handleClick} ){
         >
             Log In
         </button>
-    )
+    );
 }
 
 export default LoginButton;
