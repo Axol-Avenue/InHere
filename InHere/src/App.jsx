@@ -1,5 +1,4 @@
 import {
-    BrowserRouter,
     Routes,
     Route
 } from "react-router-dom";
@@ -18,10 +17,10 @@ function App() {
 
                 <Routes>
                     <Route path="/" element={ <Login/> }/>
-                    <Route path="/homePage" element={ <HomePage/> }/>
-                    <Route path="/taskTracker" element={ <TaskTrackerPage/> }/>
-                    <Route path="/eventStats" element={ <EventStatsPage/> }/>
-                    <Route path="/calendar" element={ <CalendarPage/> }/>
+                    <Route path="/homePage" element={<> <SideNavBar/> <HomePage/> </>}/>
+                    <Route path="/taskTracker" element={<> <SideNavBar/> <TaskTrackerPage/> </>}/>
+                    <Route path="/eventStats" element={<> <SideNavBar/> <EventStatsPage/> </>}/>
+                    <Route path="/calendar" element={<> <SideNavBar/> <CalendarPage/> </>}/>
                 </Routes>
 
         </div>
