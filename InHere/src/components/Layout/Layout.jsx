@@ -2,9 +2,9 @@ import React from 'react';
 import SideNavBar from "../SideBar/SideNavBar.jsx";
 import Header from "../PageHeader/PageHeader.jsx";
 import "./Layout.css";
-import {useLocation} from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
 
-const Layout =({children}) =>{
+const Layout =() =>{
 
     const { pathname } = useLocation();
     let headerTitle;
@@ -30,7 +30,7 @@ const Layout =({children}) =>{
         <div className="Layout">
             <SideNavBar className="SideNavBar"/>
             <Header className="Header" title={headerTitle}/>
-            <main className="main">{children}</main>
+            <main className="main"><Outlet/></main>
         </div>
     )
 }
