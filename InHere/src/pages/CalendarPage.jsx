@@ -5,7 +5,7 @@ import styles from "../components/PageHeader/PageHeader.module.css";
 function CalendarPage () {
     return (
         <div className={styles.layout}>
-            <Header />
+            {/*<Header />*/}
         </div>
     )
 }
