@@ -12,7 +12,7 @@ const Header = () => {
 
     return (
         <div className={styles.header}>
-            <h1>Calendar Page</h1>
+            <h1 className={styles.heading}>Calendar Page</h1>
             <button className={styles.button} onClick={toggleSidebar}>Settings</button>
             {isSidebarOpen && <Sidebar />}
         </div>
