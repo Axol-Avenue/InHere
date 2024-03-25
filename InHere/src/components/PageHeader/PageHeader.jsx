@@ -1,6 +1,6 @@
 import styles from "./PageHeader.module.css"
 import React, { useState } from 'react';
-import Sidebar from '../SideBar/Sidebar.jsx';
+import Settings from './Settings.jsx';
 import './PageHeader.module.css';
 
 const Header = ({title}) => {
@@ -14,7 +14,7 @@ const Header = ({title}) => {
         <div className={styles.header}>
             <h1 className={styles.heading}>{title}</h1>
             <button className={styles.button} onClick={toggleSidebar}>Settings</button>
-            {isSidebarOpen && <Sidebar />}
+            {isSidebarOpen && <Settings />}
         </div>
     )
 }
