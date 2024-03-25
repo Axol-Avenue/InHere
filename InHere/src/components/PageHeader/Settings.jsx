@@ -1,7 +1,7 @@
-import styles from "../PageHeader/PageHeader.module.css"
-import '../PageHeader/PageHeader.module.css';
+import styles from "./PageHeader.module.css"
+import './PageHeader.module.css';
 
-const Sidebar = () => {
+const Settings = () => {
     return (
         <div className={styles.sidebar}>
             <u1>
@@ -14,4 +14,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default Settings;

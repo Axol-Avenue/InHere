@@ -1,37 +1,18 @@
-import styles from "../components/Login/Login.module.css"
-import LoginButton from "../components/Login/LoginButton.jsx"
+import styles from "./css-files/LoginPage.module.css"
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
+import LoginAuthentication from "../components/Login/LoginAuthentication.jsx";
 
-async function authenticate(username, password) {
-    if (username !== '' && password !== '')
-    {
-        // TODO: add actual authentication
-        if (username === 'admin' && password === 'admin')
-        {
-            return true; // authentication successful
-        }
-        else
-        {
-            throw new Error('Invalid Credentials');
-        }
-    }
-    else
-    {
-        throw new Error('Username and Password are required');
-    }
-}
-
-function Login (){
+function LoginPage (){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleClick = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await authenticate(username, password);
+            await LoginAuthentication(username, password);
             navigate('/homePage');
         }
         catch (authErr) {
@@ -42,8 +23,8 @@ function Login (){
 
     return (
         <div className={styles.wrapper}>
-            <form action="">
-                <h1>Login</h1>
+            <h1>Login</h1>
+            <form action="" onSubmit={handleSubmit}>
                 <div className={styles.input}>
                     <input
                         type="text"
@@ -63,17 +44,19 @@ function Login (){
                     />
                 </div>
 
-                <div className='registerLink'>
-                    <p>First time in here? <a href="">Sign Up!</a></p>
-                </div>
-
-                <LoginButton handleClick={handleClick}/>
+                <button type="submit" className={styles.button}>Log In</button>
                 {error && <p>{error}</p>}
 
+                <div className='registerLink'>
+                    <p></p>
+                    <p>First time in here?
+                        <Link to="/signUp">Sign Up!</Link>
+                    </p>
+                </div>
             </form>
         </div>
     )
 }
 
 
-export default Login
+export default LoginPage;
