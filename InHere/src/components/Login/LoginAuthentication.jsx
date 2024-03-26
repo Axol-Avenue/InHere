@@ -8,12 +8,11 @@ async function LoginAuthentication (username, password){
         }
         else
         {
-            throw new Error('Invalid Credentials');
+            throw new Error('Invalid Credentials!');
         }
     }
-    else
-    {
-        throw new Error('Username and Password are required');
+    else {
+        throw new Error('');
     }
 }
 

@@ -1,23 +1,31 @@
 import styles from "./css-files/LoginPage.module.css"
 import React, {useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
+import LoginValidation from "../components/Login/LoginValidation.jsx";
 import LoginAuthentication from "../components/Login/LoginAuthentication.jsx";
 
 function LoginPage (){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+
+    const [authError, setAuthError] = useState('');
+    const [inputErrors, setInputErrors] = useState({});
+
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        setInputErrors( LoginValidation(username, password) );
+
         try {
             await LoginAuthentication(username, password);
             navigate('/homePage');
         }
         catch (authErr) {
-            setError(authErr.message);
+            setAuthError(authErr.message);
         }
+
     }
 
 
@@ -31,8 +39,9 @@ function LoginPage (){
                         placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        required
+                        // required
                     />
+                    {inputErrors.username && <span className={styles.formErrors}>{inputErrors.username}</span>}
                 </div>
                 <div className={styles.input}>
                     <input
@@ -40,12 +49,13 @@ function LoginPage (){
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
+                        // required
                     />
+                    {inputErrors.password && <span className={styles.formErrors}>{inputErrors.password}</span>}
                 </div>
 
                 <button type="submit" className={styles.button}>Log In</button>
-                {error && <p>{error}</p>}
+                {authError && <p className={styles.formErrors}>{authError}</p>}
 
                 <div className='registerLink'>
                     <p></p>
