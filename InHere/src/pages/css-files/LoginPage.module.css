@@ -11,6 +11,12 @@
     border-radius: 10px;
 }
 
+.formErrors {
+    font-weight: bold;
+    padding: 3px;
+    color: white;
+}
+
 .button{
     align-content: center;
     justify-content: center;
