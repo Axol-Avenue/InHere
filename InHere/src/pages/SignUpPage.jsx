@@ -1,38 +1,30 @@
 import styles from "./css-files/SignUpPage.module.css"
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import React, {useState} from "react";
+import SignUpValidation from "../components/SignUp/SignUpValidation.jsx";
 
-async function authenticate(username, password) {
-    if (username !== '' && password !== '')
-    {
-        // TODO: add actual authentication
-        if (username === 'admin' && password === 'admin')
-        {
-            return true; // authentication successful
-        }
-        else
-        {
-            throw new Error('Invalid Credentials');
-        }
-    }
-    else
-    {
-        throw new Error('Username and Password are required');
-    }
-}
 
 function SignUpPage () {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+
+    const [inputErrors, setInputErrors] = useState({});
+
     const navigate = useNavigate();
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
-        navigate("/");
+        setInputErrors( SignUpValidation(email, username, password) );
+
+        // TODO: fix having to double click button to return to login page
+        if(inputErrors.email === '' && inputErrors.username === '' && inputErrors.password === '')
+        {
+            navigate("/");
+        }
     }
+
     return (
         <div className={styles.wrapper}>
             <h1>Sign Up</h1>
@@ -43,8 +35,9 @@ function SignUpPage () {
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        required
+                        // required
                     />
+                    {inputErrors.email && <span className={styles.formErrors}>{inputErrors.email}</span>}
                 </div>
                 <div className={styles.input}>
                     <input
@@ -52,8 +45,9 @@ function SignUpPage () {
                         placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        required
+                        // required
                     />
+                    {inputErrors.username && <span className={styles.formErrors}>{inputErrors.username}</span>}
                 </div>
                 <div className={styles.input}>
                     <input
@@ -61,8 +55,9 @@ function SignUpPage () {
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
+                        // required
                     />
+                    {inputErrors.password && <span className={styles.formErrors}>{inputErrors.password}</span>}
                 </div>
 
                 <button type="submit" className={styles.button}>Create Account</button>
