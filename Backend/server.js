@@ -8,8 +8,8 @@ app.use(express.json);
 
 const db = mysql.createConnection({
     host: "localhost", // TODO: find host for database on web server!
-    user: "root",
-    password: "",
+    user: "axios",
+    password: "AxiosAccess4276",
     database: "inhere"
 });
 
