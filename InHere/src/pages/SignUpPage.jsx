@@ -28,16 +28,8 @@ function SignUpPage () {
                 password: password
             };
 
-            const headers = {
-                headers: {
-                    'Access-Control-Request-Headers' : 'X-PINGOTHER, Content-Type',
-                    'Access-Control-Request-Method' : 'POST, OPTIONS',
-                    'Access-Control-Allow-Origin' : '*'
-
-        }
-            }
             // Call API:
-            axios.post('http://localhost:3306/signUp', values, headers)
+            axios.post('http://localhost:3306/signUp', values)
                 .then(res => {
 
                     console.log(res);
