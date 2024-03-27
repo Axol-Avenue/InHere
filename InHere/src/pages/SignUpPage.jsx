@@ -2,6 +2,7 @@ import styles from "./css-files/SignUpPage.module.css"
 import {useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import SignUpValidation from "../components/SignUp/SignUpValidation.jsx";
+import axios from 'axios';
 
 
 function SignUpPage () {
@@ -16,12 +17,27 @@ function SignUpPage () {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        setInputErrors( SignUpValidation(email, username, password) );
+        const err = SignUpValidation(email, username, password);
+        setInputErrors( err );
 
-        // TODO: fix having to double click button to return to login page
-        if(inputErrors.email === '' && inputErrors.username === '' && inputErrors.password === '')
+        if(err.email === '' && err.username === '' && err.password === '')
         {
-            navigate("/");
+            const values = {
+                email: email,
+                username: username,
+                password: password
+            };
+
+            // Call API:
+            axios.post('http://localhost:3306/signUp', values)
+                .then(res => {
+
+                    console.log(res);
+                    navigate("/");
+
+                })
+                .catch(err => console.log(err));
+
         }
     }
 
