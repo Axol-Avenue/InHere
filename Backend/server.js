@@ -13,7 +13,7 @@ const db = mysql.createConnection({
     database: "inhere"
 });
 
-app.post('http://localhost:3306/signUp', (req, res) => {
+app.post('/signUp', (req, res) => {
     const sql = "INSERT INTO User (`Email`, `Username`, `Password`) VALUES (?)";
 
     const values = [
