@@ -32,7 +32,7 @@ function SignUpPage () {
                 headers: {
                     'Access-Control-Request-Headers' : 'X-PINGOTHER, Content-Type',
                     'Access-Control-Request-Method' : 'POST, OPTIONS',
-                    'Access-Control-Allow-Origin' : 'https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com'
+                    'Access-Control-Allow-Origin' : '*'
 
         }
             }
