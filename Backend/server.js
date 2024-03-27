@@ -13,6 +13,8 @@ const db = mysql.createConnection({
     database: "inhere"
 });
 
+db.connect();
+
 app.post('/signUp', (req, res) => {
     const sql = "INSERT INTO User (`Email`, `Username`, `Password`) VALUES (?)";
 
