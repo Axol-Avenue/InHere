@@ -31,7 +31,7 @@ function SignUpPage () {
             const headers = {
                 headers: {
                     'Access-Control-Request-Headers' : 'X-PINGOTHER, Content-Type',
-                    'Access-Control-Request-Method' : 'POST'
+                    'Access-Control-Request-Method' : 'POST, OPTIONS'
                 }
             }
             // Call API:
