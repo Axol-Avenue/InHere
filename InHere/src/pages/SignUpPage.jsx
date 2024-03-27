@@ -2,7 +2,7 @@ import styles from "./css-files/SignUpPage.module.css"
 import {useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import SignUpValidation from "../components/SignUp/SignUpValidation.jsx";
-import axios from 'redaxios';
+import axios from 'axios';
 
 
 function SignUpPage () {
