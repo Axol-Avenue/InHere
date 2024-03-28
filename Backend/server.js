@@ -13,7 +13,14 @@ const db = mysql.createConnection({
     database: "inhere"
 });
 
+app.options('*', cors())
 app.post('/signUp', (req, res) => {
+
+    // Testing if the connection to the database is working
+    if(db.state === 'disconnected'){
+        console.log("Db connection is unavailable (disconnected)");
+    }
+
     const sql = "INSERT INTO User (`Email`, `Username`, `Password`) VALUES (?)";
 
     const values = [
