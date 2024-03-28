@@ -29,7 +29,7 @@ function SignUpPage () {
             };
 
             // Call API:
-            axios.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3306/signUp', values)
+            axios.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com/signUp', values)
                 .then(res => {
 
                     console.log(res);
