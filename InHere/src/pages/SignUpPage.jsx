@@ -31,7 +31,7 @@ function SignUpPage () {
             };
 
             // Call API:
-            axios.post('http://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/signUp', values)
+            axios.post('http://localhost:3307/signUp', values)
                 .then(res => {
 
                     console.log(res);
