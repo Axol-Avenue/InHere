@@ -2,7 +2,7 @@ import styles from "./css-files/SignUpPage.module.css"
 import {useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import SignUpValidation from "../components/SignUp/SignUpValidation.jsx";
-import axios from 'axios';
+import http from "../http-common.js";
 
 
 function SignUpPage () {
@@ -31,7 +31,7 @@ function SignUpPage () {
             };
 
             // Call API:
-            axios.post('http://localhost:3307/signUp', values)
+            http.post('http://localhost:3307/signUp', values)
                 .then(res => {
 
                     console.log(res);
