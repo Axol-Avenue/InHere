@@ -1,4 +1,4 @@
-function SignUpValidation (email, username, password){
+function SignUpValidation (email, username, password, salt){
     const errors = {};
 
     // TODO: add validation for email, username, and password requirements
@@ -28,6 +28,15 @@ function SignUpValidation (email, username, password){
     else
     {
         errors.password = "";
+    }
+
+    if (salt === '')
+    {
+        errors.salt = " Salt should not be empty!";
+    }
+    else
+    {
+        errors.salt = "";
     }
 
     return errors;
