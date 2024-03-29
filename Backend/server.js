@@ -9,7 +9,7 @@ app.use(express.json());
 //     origin: 'ec2-18-223-107-62.us-east-2.compute.amazonaws.com', // Replace with your React app's origin
 //     optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
 // };
-app.use( cors(corsOptions) );
+app.use( cors() );
 
 const db = mysql.createConnection({
     host: "localhost", // TODO: find host for database on web server!
