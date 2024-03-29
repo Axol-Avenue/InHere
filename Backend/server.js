@@ -32,12 +32,14 @@ app.post('/signUp', (req, res) => {
     ];
 
 
-    db.query(sql, values, (err, data) => {
+    db.query(sql, values, (err, result) => {
         if(err)
         {
-            return res.json("Error inserting data into the database");
+            console.error("Error inserting data into the database:", err);
+            return res.status(500).json({ error: "Error inserting data into the database" });
         }
-        return res.json(data);
+        console.log("Data inserted into the database:", result);
+        return res.status(200).json({ message: "Data inserted successfully" });
     })
 })
 
