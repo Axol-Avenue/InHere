@@ -28,14 +28,14 @@ db.connect(err => {
 
 app.post('/signUp', (req, res) => {
 
-    const sql = "INSERT INTO User (`Email`, `Username`, `Password`) VALUES (?,?,?)";
+    const sql = "INSERT INTO User (`Email`, `Username`, `Password`, `Salt`) VALUES (?,?,?,?)";
 
     const values = [
         req.body.email,
         req.body.username,
-        req.body.password
+        req.body.password,
+        req.body.salt
     ];
-
 
     db.query(sql, values, (err, result) => {
         if(err)
