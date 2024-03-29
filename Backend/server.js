@@ -14,15 +14,15 @@ const db = mysql.createConnection({
     database: "inhere"
 });
 
-db.connect(err => {
-    if (err) {
-        console.error("Error connecting to MySQL database:", err);
-        process.exit(1);
-    }
-    console.log("MySQL database connected!");
-});
-
 app.post('/signUp', (req, res) => {
+
+    db.connect(err => {
+        if (err) {
+            console.error("Error connecting to MySQL database:", err);
+            process.exit(1);
+        }
+        console.log("MySQL database connected!");
+    });
 
     const sql = "INSERT INTO User (`Email`, `Username`, `Password`, `Salt`) VALUES (?,?,?,?)";
 
@@ -42,6 +42,7 @@ app.post('/signUp', (req, res) => {
         console.log("Data inserted into the database:", result);
         return res.status(200).json({ message: "Data inserted successfully" });
     })
+    db.end();
 })
 
 app.listen(3307, () => {
