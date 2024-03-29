@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-    origin: 'https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com', // Replace with your React app's origin
+    origin: 'http://localhost:5173', // Replace with your React app's origin
     optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use( cors(corsOptions) );
