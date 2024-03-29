@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json());
 
 app.use( cors() );
+app.use( app.headers['Access-Control-Allow-Origin'] = '*' );
 
 const db = mysql.createConnection({
     host: "localhost",
