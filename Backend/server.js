@@ -7,7 +7,7 @@ app.use( cors() );
 app.use(express.json);
 
 const db = mysql.createConnection({
-    host: "ec2-18-223-107-62.us-east-2.compute.amazonaws.com", // TODO: find host for database on web server!
+    host: "localhost", // TODO: find host for database on web server!
     user: "axios",
     password: "AxiosAccess4276",
     database: "inhere"
@@ -22,7 +22,7 @@ db.connect(err => {
 console.log(db)
 
 app.options('*', cors())
-app.post('/Backend/server.js', (req, res) => {
+app.post('/signUp', (req, res) => {
 
     // Testing if the connection to the database is working
     if(db.state === 'disconnected'){
