@@ -36,7 +36,11 @@ function SignUpPage () {
                     navigate("/");
 
                 })
-                .catch(err => console.log(err));
+                .catch(err =>
+                {
+                    console.log("axios error");
+                    console.log(err)
+                });
 
         }
     }
