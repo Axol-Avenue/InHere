@@ -29,7 +29,7 @@ function SignUpPage () {
             };
 
             // Call API:
-            axios.post('http://localhost:3306/signUp', values)
+            axios.post('http://localhost:3307/signUp', values)
                 .then(res => {
 
                     console.log(res);
