@@ -11,6 +11,7 @@ export default function DateCalendarUI() {
                 /* showDaysOutsideCurrentMonth can be enabled or disabled, fixedWeekNumber determines how many weeks to display */
                 /* showDaysOutsideCurrentMonth fixedWeekNumber={6} */
                 /* displayWeekNumber */
+
             />
         </LocalizationProvider>
     );
