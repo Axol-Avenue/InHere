@@ -11,7 +11,7 @@ function LoginPage (){
 
     const navigate = useNavigate();
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
         const err = LoginValidation(username, password);
