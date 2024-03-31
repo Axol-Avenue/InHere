@@ -31,7 +31,7 @@ function SignUpPage () {
             };
 
             // Call API w/ Fetch:
-            const url = "http://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/signUp";
+            const url = "https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/signUp";
             const options = {
                 method: "POST",
                 headers: {
