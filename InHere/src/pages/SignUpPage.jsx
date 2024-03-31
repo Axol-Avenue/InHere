@@ -31,7 +31,7 @@ function SignUpPage () {
             };
 
             // Call API:
-            http.post('https://localhost:3307/signUp', values)
+            http.post('http://localhost:3307/signUp', values)
                 .then(res => {
 
                     console.log(res);
