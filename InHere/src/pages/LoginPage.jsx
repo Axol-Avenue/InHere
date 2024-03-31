@@ -30,7 +30,7 @@ function LoginPage (){
                 .then(res => {
 
                     console.log(res);
-                    if(res.data === "Authentication Successful") {
+                    if(res.data.message === 'Authentication Successful') {
                         navigate("/homePage");
                     } else {
                         alert("No record existed");
