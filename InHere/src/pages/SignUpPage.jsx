@@ -42,7 +42,7 @@ function SignUpPage () {
                 body: JSON.stringify(values),
             };
             fetch(url, options)
-                .then((response) => response.json())
+                .then((response) => {response.json(); navigate("/");})
                 .then((data) => {
                     console.log(data);
                 });
