@@ -26,7 +26,7 @@ const db = mysql.createPool({
 app.options('*', cors())
 
 // Sign-in Post
-app.post('/', (req, res) => {
+app.post('/login', (req, res) => {
 
     const sql = "SELECT * FROM User WHERE `Username` = ? AND `Password` = ?";
 
