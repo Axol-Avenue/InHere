@@ -72,7 +72,6 @@ function LoginPage (){
                 </div>
 
                 <button type="submit" className={styles.button}>Log In</button>
-                {authError && <p className={styles.formErrors}>{authError}</p>}
 
                 <div className='registerLink'>
                     <p></p>
