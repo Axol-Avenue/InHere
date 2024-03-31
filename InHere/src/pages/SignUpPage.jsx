@@ -30,36 +30,19 @@ function SignUpPage () {
                 salt: salt
             };
 
-            // Call API w/ Fetch:
-            const url = "https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/signUp";
-            const options = {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json;charset=UTF-8",
-                    "Access-Control-Allow-Origin": "*",
-                },
-                body: JSON.stringify(values),
-            };
-            fetch(url, options)
-                .then((response) => {response.json(); navigate("/");})
-                .then((data) => {
-                    console.log(data);
-                });
-
             // Call API w/ Axios:
-            // http.post('http://localhost:3307/signUp', values)
-            //     .then(res => {
-            //
-            //         console.log(res);
-            //         navigate("/");
-            //
-            //     })
-            //     .catch(err =>
-            //     {
-            //         console.log("axios error");
-            //         console.log(err)
-            //     });
+            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/signUp', values)
+                .then(res => {
+
+                    console.log(res);
+                    navigate("/");
+
+                })
+                .catch(err =>
+                {
+                    console.log("axios error");
+                    console.log(err)
+                });
 
         }
     }
