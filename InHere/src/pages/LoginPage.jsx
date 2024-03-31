@@ -17,15 +17,16 @@ function LoginPage (){
         const err = LoginValidation(username, password);
         setInputErrors( err );
 
-        if(err.username === '' && err.password === '')
-        {
+        console.log(err);
+
+        if(err.username === '' && err.password === '') {
             const values = {
                 username: username,
                 password: password
             };
 
             // Call API w/ Axios:
-            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/login', values)
+            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307', values)
                 .then(res => {
 
                     console.log(res);
