@@ -1,0 +1,16 @@
+.pageLayout {
+    display: grid;
+    width: auto;
+    height: 100%;
+}
+
+.calendar {
+    width: auto;
+    height: 100%;
+}
+
+.pageContent {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
