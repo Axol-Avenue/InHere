@@ -3,9 +3,8 @@ const mysql = require("mysql2");
 const cors = require("cors");
 
 const app = express();
-app.use(express.json());
-
 app.use( cors() );
+app.use(express.json());
 
 const db = mysql.createPool({
     host: "localhost",
@@ -13,6 +12,8 @@ const db = mysql.createPool({
     password: "AxiosAccess4276",
     database: "inhere"
 });
+
+app.options('*', cors()) // include before other routes
 
 app.post('/signUp', (req, res) => {
 
