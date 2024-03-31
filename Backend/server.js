@@ -47,6 +47,7 @@ app.post('/signUp', (req, res) => {
     })
 })
 
+// Allows Express to run on HTTPS instead of HTTP
 httpsServer.listen(3307, () => {
     console.log("listening on port 3307");
 })
