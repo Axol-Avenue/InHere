@@ -30,19 +30,36 @@ function SignUpPage () {
                 salt: salt
             };
 
-            // Call API:
-            http.post('http://localhost:3307/signUp', values)
-                .then(res => {
-
-                    console.log(res);
-                    navigate("/");
-
-                })
-                .catch(err =>
-                {
-                    console.log("axios error");
-                    console.log(err)
+            // Call API w/ Fetch:
+            const url = "http://localhost:3307/signUp";
+            const options = {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify(values),
+            };
+            fetch(url, options)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
                 });
+
+            // Call API w/ Axios:
+            // http.post('http://localhost:3307/signUp', values)
+            //     .then(res => {
+            //
+            //         console.log(res);
+            //         navigate("/");
+            //
+            //     })
+            //     .catch(err =>
+            //     {
+            //         console.log("axios error");
+            //         console.log(err)
+            //     });
 
         }
     }
