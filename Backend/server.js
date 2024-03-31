@@ -1,19 +1,29 @@
+const fs = require("fs");
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+const https = require("https");
+var privateKey = fs.readFileSync('./ssl/private.key', 'utf8');
+var certificate = fs.readFileSync('./ssl/certificate.crt', 'utf8');
 
-const app = express();
-app.use( cors() );
+var credentials = {key: privateKey, cert: certificate};
+var app = express();
+
 app.use(express.json());
 
+app.use( cors() );
+
+var httpsServer = https.createServer(credentials, app);
+
 const db = mysql.createPool({
+    connectionLimit: 10,
     host: "localhost",
     user: "axios",
     password: "AxiosAccess4276",
     database: "inhere"
 });
 
-app.options('*', cors()) // include before other routes
+app.options('*', cors())
 
 app.post('/signUp', (req, res) => {
 
@@ -37,6 +47,6 @@ app.post('/signUp', (req, res) => {
     })
 })
 
-app.listen(3307, () => {
+httpsServer.listen(3307, () => {
     console.log("listening on port 3307");
 })
