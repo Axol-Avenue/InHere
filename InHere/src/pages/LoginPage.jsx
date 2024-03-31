@@ -26,7 +26,7 @@ function LoginPage (){
             };
 
             // Call API w/ Axios:
-            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307', values)
+            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/', values)
                 .then(res => {
 
                     console.log(res);
