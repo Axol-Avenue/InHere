@@ -25,6 +25,31 @@ const db = mysql.createPool({
 
 app.options('*', cors())
 
+// Sign-in Post
+app.post('/', (req, res) => {
+
+    const sql = "SELECT * FROM User WHERE `Username` = ? AND `Password` = ?";
+
+    const values = [
+        req.body.username,
+        req.body.password,
+    ];
+
+    db.query(sql, values, (err, result) => {
+        if(err)
+        {
+            console.error("Error receiving data from database", err);
+            return res.status(500).json({ error: "Error receiving data from database" });
+        }
+        if(result.length > 0) {
+            return res.status(200).json({ message: "Authentication Successful" });
+        } else {
+            return res.json({ message: "Authentication Failed" });
+        }
+    })
+})
+
+// Signup Post
 app.post('/signUp', (req, res) => {
 
     const sql = "INSERT INTO User (`Email`, `Username`, `Password`, `Salt`) VALUES (?,?,?,?)";
