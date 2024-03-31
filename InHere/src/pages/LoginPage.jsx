@@ -2,13 +2,11 @@ import styles from "./css-files/LoginPage.module.css"
 import React, {useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import LoginValidation from "../components/Login/LoginValidation.jsx";
-import LoginAuthentication from "../components/Login/LoginAuthentication.jsx";
+import http from "../http-common.js";
 
 function LoginPage (){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    const [authError, setAuthError] = useState('');
     const [inputErrors, setInputErrors] = useState({});
 
     const navigate = useNavigate();
@@ -16,16 +14,35 @@ function LoginPage (){
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        setInputErrors( LoginValidation(username, password) );
+        const err = LoginValidation(username, password);
+        setInputErrors( err );
 
-        try {
-            await LoginAuthentication(username, password);
-            navigate('/homePage');
-        }
-        catch (authErr) {
-            setAuthError(authErr.message);
-        }
+        if(err.username === '' && err.password === '')
+        {
+            const values = {
+                username: username,
+                password: password
+            };
 
+            // Call API w/ Axios:
+            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/', values)
+                .then(res => {
+
+                    console.log(res);
+                    if(res.data === "Authentication Successful") {
+                        navigate("/homePage");
+                    } else {
+                        alert("No record existed");
+                    }
+
+                })
+                .catch(err =>
+                {
+                    console.log("axios error");
+                    console.log(err)
+                });
+
+        }
     }
 
 
