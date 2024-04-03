@@ -32,7 +32,10 @@ function LoginPage (){
                     console.log(res);
                     if(res.data.message === 'Authentication Successful') {
                         navigate("/homePage");
-                    } else {
+                    } else if (res.data.error === 'Password Incorrect') {
+                        alert("Password incorrect, please try again");
+                    }
+                    else {
                         alert("No record existed");
                     }
 
