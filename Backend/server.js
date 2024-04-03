@@ -37,7 +37,7 @@ app.post('/', (req, res) => {
             return res.status(500).json({ error: "Error receiving data from database" });
         }
         if(result.length > 0) {
-            if (bcrypt.compare(req.body.password, result.toString())) {
+            if (bcrypt.compareSync(req.body.password, result.toString())) {
                 return res.status(200).json({ message: "Authentication Successful" });
             }
             return res.json({ error: "Password Incorrect" });
