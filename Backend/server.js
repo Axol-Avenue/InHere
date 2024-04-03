@@ -53,7 +53,7 @@ app.post('/signUp', (req, res) => {
     const sql = "SELECT `Username` FROM User WHERE `Username` = ?";
     const sql2 = "INSERT INTO User (`Email`, `Username`, `Password`, `Salt`) VALUES (?,?,?,?)";
 
-    const hashedPass = bcrpyt.hash(req.body.password, saltRounds)
+    const hashedPass = bcrypt.hash(req.body.password, saltRounds)
         .catch(err => console.error(err.message));
 
     const values = [
