@@ -33,7 +33,11 @@ function SignUpPage () {
                 .then(res => {
 
                     console.log(res);
-                    navigate("/");
+                    if(res.data.error === 'Error, that username is already taken') {
+                        alert("Sorry, that username is already taken. Please user a different one.");
+                    } else {
+                        navigate("/");
+                    }
 
                 })
                 .catch(err =>
