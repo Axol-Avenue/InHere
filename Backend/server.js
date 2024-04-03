@@ -37,7 +37,7 @@ app.post('/', (req, res) => {
             return res.status(500).json({ error: "Error receiving data from database" });
         }
         if(result.length > 0) {
-            if (bcrypt.compare(req.body.password, result)) {
+            if (bcrypt.compare(req.body.password, result.toString())) {
                 return res.status(200).json({ message: "Authentication Successful" });
             }
             return res.json({ error: "Password Incorrect" });
@@ -53,8 +53,7 @@ app.post('/signUp', (req, res) => {
     const sql = "SELECT `Username` FROM User WHERE `Username` = ?";
     const sql2 = "INSERT INTO User (`Email`, `Username`, `Password`, `Salt`) VALUES (?,?,?,?)";
 
-    const hashedPass = bcrypt.hash(req.body.password, saltRounds)
-        .catch(err => console.error(err.message));
+    const hashedPass = bcrypt.hashSync(req.body.password, saltRounds);
 
     const values = [
         req.body.email,
