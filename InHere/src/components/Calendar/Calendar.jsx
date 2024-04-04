@@ -1,18 +1,22 @@
-import React from 'react';
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { DateCalendar } from "@mui/x-date-pickers";
+import React from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactinoPlugin from "@fullcalendar/interaction";
 
-export default function DateCalendarUI() {
-    return (
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DateCalendar
-                views={['year', 'month', 'day']}
-                /* showDaysOutsideCurrentMonth can be enabled or disabled, fixedWeekNumber determines how many weeks to display */
-                /* showDaysOutsideCurrentMonth fixedWeekNumber={6} */
-                /* displayWeekNumber */
-
-            />
-        </LocalizationProvider>
-    );
+function Calendar() {
+    return <div>
+        <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, interactinoPlugin]}
+        initialView={'dayGridMonth'}
+        headerToolbar={{
+            start: "today prev,next",
+            center: "title",
+            end: "dayGridMonth,timeGridWeek,timeGridDay"
+        }}
+        height={"90vh"}
+        />
+    </div>
 }
+
+export default Calendar;
