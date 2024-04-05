@@ -3,24 +3,26 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const https = require("https");
-var privateKey = fs.readFileSync('./ssl/private.key', 'utf8');
-var certificate = fs.readFileSync('./ssl/certificate.crt', 'utf8');
 
-var credentials = {key: privateKey, cert: certificate};
-var app = express();
+require('dotenv').config(); // database connection variables
+
+const privateKey = fs.readFileSync('./ssl/private.key', 'utf8');
+const certificate = fs.readFileSync('./ssl/certificate.crt', 'utf8');
+
+const credentials = {key: privateKey, cert: certificate};
+const app = express();
 
 app.use(express.json());
-
 app.use( cors() );
 
-var httpsServer = https.createServer(credentials, app);
+const httpsServer = https.createServer(credentials, app);
 
 const db = mysql.createPool({
-    connectionLimit: 10,
-    host: "localhost",
-    user: "axios",
-    password: "AxiosAccess4276",
-    database: "inhere"
+    connectionLimit: process.env.DB_CONNECTION_LIMIT,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 });
 
 app.options('*', cors())
