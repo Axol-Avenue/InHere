@@ -48,5 +48,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: "./*"
+          source: "InHere/dist/*"
           target: ${{ secrets.TARGET2 }}
+          strip_components: 1
