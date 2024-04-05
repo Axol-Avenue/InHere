@@ -46,6 +46,7 @@ jobs:
           script: |
             tar -xf deploy.tar.gz
             cd build/InHere/
+            npm ci
             npm run build
             cp -a ${{ secrets.BUILD }} ${{ secrets.TARGET2 }}
             cp ${{ secrets.EXPRESS }} ${{ secrets.TARGET3 }}
