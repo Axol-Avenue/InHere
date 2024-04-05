@@ -19,12 +19,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run build --if-present
+      - name: Clean Install Node Modules
+        run: npm ci
+
+      - name: Build Production Application
+        run: npm run build
 
       - name: Transfer Backend to EC2
         uses: appleboy/scp-action@master
