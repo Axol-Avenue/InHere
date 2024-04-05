@@ -1,0 +1,33 @@
+.heading {
+    margin-top: 20px;
+    margin-left: 5%;
+}
+
+.chartContainer {
+    width: 100%; /* Adjust width as needed */
+    display: flex;
+}
+
+.chartBox {
+    width: 25%; /* Adjust width as needed */
+
+    border: 1px solid black; /* Just for visualization */
+
+    margin-top: 20px;
+    margin-left: 5%;
+
+    align-content: center;
+}
+
+.legendBox {
+    width: 60%; /* Adjust width as needed */
+
+    border: 1px solid black; /* Just for visualization */
+
+    margin-top: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+
+    align-content: center;
+    justify-content: center;
+}

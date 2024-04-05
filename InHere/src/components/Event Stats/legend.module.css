@@ -1,0 +1,24 @@
+.legendEntryContainer {
+    border: 1px solid red; /* Just for visualization */
+
+    display: flex;
+
+    align-items: center;
+    justify-items: stretch;
+}
+
+.legendEntryColor {
+    border: 1px solid rebeccapurple; /* Just for visualization */
+
+    text-align: center;
+
+    justify-self: left;
+}
+
+.legendEntryText {
+    border: 1px solid royalblue; /* Just for visualization */
+
+    text-align: center;
+
+    justify-self: right;
+}

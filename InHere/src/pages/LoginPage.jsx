@@ -11,43 +11,51 @@ function LoginPage (){
 
     const navigate = useNavigate();
 
+    // Uncomment for local development:
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const err = LoginValidation(username, password);
-        setInputErrors( err );
-
-        console.log(err);
-
-        if(err.username === '' && err.password === '') {
-            const values = {
-                username: username,
-                password: password
-            };
-
-            // Call API w/ Axios:
-            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/', values)
-                .then(res => {
-
-                    console.log(res);
-                    if(res.data.message === 'Authentication Successful') {
-                        navigate("/homePage");
-                    } else if (res.data.error === 'Password Incorrect') {
-                        alert("Password incorrect, please try again");
-                    }
-                    else {
-                        alert("No record existed");
-                    }
-
-                })
-                .catch(err =>
-                {
-                    console.log("axios error");
-                    console.log(err)
-                });
-
-        }
+        navigate("/homepage");
     }
+
+    // Uncomment for Build:
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //
+    //     const err = LoginValidation(username, password);
+    //     setInputErrors( err );
+    //
+    //     console.log(err);
+    //
+    //     if(err.username === '' && err.password === '') {
+    //         const values = {
+    //             username: username,
+    //             password: password
+    //         };
+    //
+    //         // Call API w/ Axios:
+    //         http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/', values)
+    //             .then(res => {
+    //
+    //                 console.log(res);
+    //                 if(res.data.message === 'Authentication Successful') {
+    //                     navigate("/homePage");
+    //                 } else if (res.data.error === 'Password Incorrect') {
+    //                     alert("Password incorrect, please try again");
+    //                 }
+    //                 else {
+    //                     alert("No record existed");
+    //                 }
+    //
+    //             })
+    //             .catch(err =>
+    //             {
+    //                 console.log("axios error");
+    //                 console.log(err)
+    //             });
+    //
+    //     }
+    // }
 
 
     return (
