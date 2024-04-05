@@ -39,8 +39,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: "./InHere/Backend/*"
-          target: ${{ secrets.TARGET3 }}
+          source: "Backend/*"
+          target: ${{ secrets.TARGET2 }}
 
       - name: Transfer Production Build to EC2
         uses: appleboy/scp-action@master
