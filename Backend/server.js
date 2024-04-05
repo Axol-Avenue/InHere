@@ -6,16 +6,16 @@ const https = require("https");
 
 require('dotenv').config(); // database connection variables
 
-const privateKey = fs.readFileSync('./ssl/private.key', 'utf8');
-const certificate = fs.readFileSync('./ssl/certificate.crt', 'utf8');
+var privateKey = fs.readFileSync('./ssl/private.key', 'utf8');
+var certificate = fs.readFileSync('./ssl/certificate.crt', 'utf8');
 
-const credentials = {key: privateKey, cert: certificate};
-const app = express();
+var credentials = {key: privateKey, cert: certificate};
+var app = express();
 
 app.use(express.json());
 app.use( cors() );
 
-const httpsServer = https.createServer(credentials, app);
+var httpsServer = https.createServer(credentials, app);
 
 const db = mysql.createPool({
     connectionLimit: process.env.DB_CONNECTION_LIMIT,
