@@ -3,7 +3,11 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const https = require("https");
+
+require('dotenv').config(); // database connection variables
+
 const bcrypt = require("bcrypt");
+
 var privateKey = fs.readFileSync('./ssl/private.key', 'utf8');
 var certificate = fs.readFileSync('./ssl/certificate.crt', 'utf8');
 
@@ -16,11 +20,11 @@ app.use( cors() );
 var httpsServer = https.createServer(credentials, app);
 const saltRounds = 10;
 const db = mysql.createPool({
-    connectionLimit: 5,
-    host: "localhost",
-    user: "axios",
-    password: "AxiosAccess4276",
-    database: "inhere"
+    connectionLimit: process.env.DB_CONNECTION_LIMIT,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 });
 
 app.options('*', cors())
