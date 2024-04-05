@@ -3,7 +3,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactinoPlugin from "@fullcalendar/interaction";
-import Modal from "./AddEventModal.jsx";
+//import Modal from "./AddEventModal.jsx";
 
 function Calendar() {
     // Event placeholders
