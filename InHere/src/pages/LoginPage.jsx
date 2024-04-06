@@ -11,6 +11,14 @@ function LoginPage (){
 
     const navigate = useNavigate();
 
+    // Uncomment for local development:
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //
+    //     navigate("/homepage");
+    // }
+
+    // Uncomment for Build:
     const handleSubmit = (event) => {
         event.preventDefault();
 
