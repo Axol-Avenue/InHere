@@ -31,10 +31,11 @@ function Calendar() {
                 center: "title",
                 end: "dayGridMonth,timeGridWeek,timeGridDay"
             }}
-            height={"90vh"}
+            height={"89vh"}
             events={events}
         />
-
+        <button onClick={() => setIsOpen(true)}>Add Event</button>
+        <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
     </div>
 }
 
