@@ -89,6 +89,20 @@ app.post('/signUp', (req, res) => {
     })
 })
 
+// Event Statistics Get:
+// Assumptions: Status == 0 is incompleted, Status == 1 is completed
+/*
+SELECT 'Total Count' as Condition_Name, COUNT(*) as count
+FROM Task
+WHERE UserID = 42
+
+UNION ALL
+
+SELECT 'Completed Count' as Condition_Name, COUNT(*) as count
+FROM Task
+WHERE UserID = 42 && Status = 1;
+*/
+
 // Allows Express to run on HTTPS instead of HTTP
 httpsServer.listen(3307, () => {
     console.log("listening on port 3307");
