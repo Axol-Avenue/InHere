@@ -3,7 +3,14 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const https = require("https");
+var app = express();
 
+app.use(express.json());
+app.use( cors() );
+
+// --------------------
+// Database Connection:
+// --------------------
 require('dotenv').config(); // database connection variables
 
 const bcrypt = require("bcrypt");
@@ -12,10 +19,6 @@ var privateKey = fs.readFileSync('./ssl/private.key', 'utf8');
 var certificate = fs.readFileSync('./ssl/certificate.crt', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
-var app = express();
-
-app.use(express.json());
-app.use( cors() );
 
 var httpsServer = https.createServer(credentials, app);
 const saltRounds = 10;
@@ -28,6 +31,10 @@ const db = mysql.createPool({
 });
 
 app.options('*', cors())
+
+// --------------------
+// Database API Calls::
+// --------------------
 
 // Sign-in Post
 app.post('/', (req, res) => {
@@ -102,6 +109,35 @@ SELECT 'Completed Count' as Condition_Name, COUNT(*) as count
 FROM Task
 WHERE UserID = 42 && Status = 1;
 */
+app.get('/eventStats', (req, res) => {
+    const userId = req.query.userId; // Get the UserID from the query parameters
+
+    if (!userId) {
+        res.status(400).json({ error: 'UserID is required' });
+        return;
+    }
+
+    const sqlQuery = `
+        SELECT 'Total Count' as Condition_Name, COUNT(*) as count
+        FROM Task
+        WHERE UserID = ${userId}
+        UNION ALL
+        SELECT 'Completed Count' as Condition_Name, COUNT(*) as count
+        FROM Task
+        WHERE UserID = ${userId} AND Status = 1;
+    `;
+
+    db.query(sqlQuery, (error, results) => {
+        if (error) {
+            res.status(500).json({ error: 'Error executing SQL query' });
+        }
+        else
+        {
+            res.json(results);
+        }
+    });
+});
+
 
 // Allows Express to run on HTTPS instead of HTTP
 httpsServer.listen(3307, () => {

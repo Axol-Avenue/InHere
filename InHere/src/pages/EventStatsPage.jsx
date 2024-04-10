@@ -1,39 +1,53 @@
+import React, {useState} from 'react';
+
 import ProgressChart from "../components/Event Stats/ProgressChart.jsx";
 import styles from "./css-files/EventStatsPage.module.css"
-
 import Legend from "../components/Event Stats/Legend.jsx";
 
-// TODO: create API call for task counts
+import http from "../http-common.js";
 
-// Test Data:
-// MANIPULATE THIS DATA TO SIMULATE DATABASE QUERY RESPONSE:
-const fakeQueryRes = [
-    {
-        "Condition_Name" : "Total Count",
-        "count" : 10
-    },
-    {
-        "Condition_Name" : "Completed Count",
-        "count" : 3
-    }
-]
+// Variable Declarations:
+const [eventStats, setEventStats] = useState(null);
 
-// Percentage Calculations:
-const totalTaskCount = fakeQueryRes.find(
-    item =>
-        item.Condition_Name === 'Total Count').count;
+const TEST_USER_ID = 65;
 
-const completedTaskCount = fakeQueryRes.find(
-    item =>
-        item.Condition_Name === 'Completed Count').count;
 
-const incompleteTaskCount = totalTaskCount - completedTaskCount;
+// Get Task Completion Data:
+const fetchData = (userId) => {
 
-const percentage = (completedTaskCount /  totalTaskCount) * 100;
+    // Call API w/ Axios:
+    http.get(`https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/eventStats?userId=${userId}`)
+        .then(res => {
+            console.log(res);
+            setEventStats(res.data);
+        })
+        .catch(err =>
+        {
+            console.log("axios error");
+            console.log(err)
+        });
+};
 
 
 // Display Event Stats Page:
 function EventStatsPage () {
+    // Get Task Completion Data:
+    fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
+
+    // Percentage Calculations:
+    const totalTaskCount = eventStats.find(
+        item =>
+            item.Condition_Name === 'Total Count').count;
+
+    const completedTaskCount = eventStats.find(
+        item =>
+            item.Condition_Name === 'Completed Count').count;
+
+    const incompleteTaskCount = totalTaskCount - completedTaskCount;
+
+    const percentage = (completedTaskCount /  totalTaskCount) * 100;
+
+
     // Parameters to Populate Progress Charts and Legends:
     const legendProps = {
         total_count: totalTaskCount,
