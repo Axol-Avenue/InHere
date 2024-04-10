@@ -13,20 +13,20 @@ const TEST_USER_ID = 65;
 
 
 // Get Task Completion Data:
-const fetchData = (userId) => {
-
-    // Call API w/ Axios:
-    http.get(`https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/eventStats?userId=${userId}`)
-        .then(res => {
-            console.log(res);
-            setEventStats(res.data);
-        })
-        .catch(err =>
-        {
-            console.log("axios error");
-            console.log(err)
-        });
-};
+// const fetchData = (userId) => {
+//
+//     // Call API w/ Axios:
+//     http.get(`https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/eventStats?userId=${userId}`)
+//         .then(res => {
+//             console.log(res);
+//             setEventStats(res.data);
+//         })
+//         .catch(err =>
+//         {
+//             console.log("axios error");
+//             console.log(err)
+//         });
+// };
 
 
 // Display Event Stats Page:
