@@ -28,18 +28,6 @@ const fetchData = (userId) => {
         });
 };
 
-// Test Data:
-// MANIPULATE THIS DATA TO SIMULATE DATABASE QUERY RESPONSE:
-const fakeQueryRes = [
-    {
-        "Condition_Name" : "Total Count",
-        "count" : 10
-    },
-    {
-        "Condition_Name" : "Completed Count",
-        "count" : 3
-    }
-]
 
 // Display Event Stats Page:
 function EventStatsPage () {
