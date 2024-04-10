@@ -60,7 +60,7 @@ function EventStatsPage () {
         total_count: totalTaskCount,
         completed_count: completedTaskCount,
         incomplete_count: incompleteTaskCount
-    }
+    };
 
     return (
         <>
@@ -78,7 +78,7 @@ function EventStatsPage () {
 
             </div>
         </>
-    )
+    );
 }
 
 export default EventStatsPage;
