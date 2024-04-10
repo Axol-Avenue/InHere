@@ -31,19 +31,26 @@ const fetchData = (userId) => {
 
 // Display Event Stats Page:
 function EventStatsPage () {
-    // Get Task Completion Data:
-    fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
+    // // Get Task Completion Data:
+    // fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
+    //
+    // // Percentage Calculations:
+    // const totalTaskCount = eventStats.find(
+    //     item =>
+    //         item.Condition_Name === 'Total Count').count;
+    //
+    // const completedTaskCount = eventStats.find(
+    //     item =>
+    //         item.Condition_Name === 'Completed Count').count;
+    //
+    // const incompleteTaskCount = totalTaskCount - completedTaskCount;
+    //
+    // const percentage = (completedTaskCount /  totalTaskCount) * 100;
 
-    // Percentage Calculations:
-    const totalTaskCount = eventStats.find(
-        item =>
-            item.Condition_Name === 'Total Count').count;
-
-    const completedTaskCount = eventStats.find(
-        item =>
-            item.Condition_Name === 'Completed Count').count;
-
-    const incompleteTaskCount = totalTaskCount - completedTaskCount;
+    // DUMMY DATA:
+    const totalTaskCount = 4;
+    const completedTaskCount = 3;
+    const incompleteTaskCount = 1;
 
     const percentage = (completedTaskCount /  totalTaskCount) * 100;
 
