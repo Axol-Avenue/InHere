@@ -1,7 +1,10 @@
+import styles from "../components/PageHeader/PageHeader.module.css";
+import Calendar from "../components/Calendar/ListCalendar.jsx";
+
 function TaskTrackerPage () {
     return (
-        <div>
-            <h1>Task Tracker Page</h1>
+        <div className={styles.layout}>
+            <Calendar/>
         </div>
     )
 }

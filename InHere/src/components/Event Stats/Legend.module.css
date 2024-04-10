@@ -1,0 +1,42 @@
+.legendEntryContainer {
+    /*border: 3px solid red; !* Just for visualization *!*/
+
+    display: flex;
+
+    align-items: center;
+    justify-items: stretch;
+
+    margin-top: 10%;
+    margin-bottom: 10%;
+
+}
+
+.legendEntryColor {
+    /*border: 1px solid rebeccapurple; !* Just for visualization *!*/
+
+    width: 33%;
+
+    text-align: center;
+
+    justify-self: left;
+}
+
+.legendEntryLabel {
+    /*border: 1px solid royalblue; !* Just for visualization *!*/
+
+    width: 34%;
+
+    text-align: left;
+
+    justify-self: center;
+}
+
+.legendEntryCount {
+    /*border: 1px solid green; !* Just for visualization *!*/
+
+    width: 34%;
+
+    text-align: center;
+
+    justify-self: right;
+}

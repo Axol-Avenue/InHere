@@ -1,52 +1,53 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: React Continuous Deployment
+name: Deploy React App to AWS Ec2
 
 on:
   push:
     branches: [ "main" ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          mkdir ../build
-          cp -TR . ../build
-          tar -czvf deploy.tar.gz ../build/
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      - name: copy file via ssh password
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./InHere
+
+      - name: Build Production Application
+        run: npm run build
+        working-directory: ./InHere
+
+      - name: Transfer Backend to EC2
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          source: "deploy.tar.gz"
-          target: ${{ secrets.TARGET }}
+          source: "Backend/*"
+          target: ${{ secrets.TARGET2 }}
 
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.0.3
-        env:
-          Target: ${{ secrets.TARGET }}
+      - name: Transfer Production Build to EC2
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          script: |
-            tar -xf deploy.tar.gz
-            cd build/InHere/
-            npm run build
-            cp -a ${{ secrets.BUILD }} ${{ secrets.TARGET2 }}
-            cp ${{ secrets.EXPRESS }} ${{ secrets.TARGET3 }}
-            rm -r dist/
+          source: "InHere/dist/*"
+          target: ${{ secrets.TARGET2 }}
+          strip_components: 2

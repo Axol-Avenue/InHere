@@ -1,22 +1,31 @@
+import HomeIcon from '@mui/icons-material/Home';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import DataSaverOffRoundedIcon from '@mui/icons-material/DataSaverOffRounded';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
 export const navData = [
     {
         id: 0,
-        text: "Home",
-        link: "/homePage"
+        text: "Home        ",
+        link: "/homePage",
+        icon: <HomeIcon/>
     },
     {
         id: 1,
         text: "Task Tracker",
-        link: "/taskTracker"
+        link: "/taskTracker",
+        icon: <AssignmentIcon/>
     },
     {
         id: 2,
         text: "Event Statistics",
-        link: "/eventStats"
+        link: "/eventStats",
+        icon: <DataSaverOffRoundedIcon/>
     },
     {
         id: 3,
-        text: "Calendar",
-        link: "/calendar"
+        text: "Calendar        ",
+        link: "/calendar",
+        icon: <CalendarMonthIcon/>
     }
 ]

@@ -11,6 +11,14 @@ function LoginPage (){
 
     const navigate = useNavigate();
 
+    // Uncomment for local development:
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //
+    //     navigate("/homepage");
+    // }
+
+    // Uncomment for Build:
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -32,7 +40,10 @@ function LoginPage (){
                     console.log(res);
                     if(res.data.message === 'Authentication Successful') {
                         navigate("/homePage");
-                    } else {
+                    } else if (res.data.error === 'Password Incorrect') {
+                        alert("Password incorrect, please try again");
+                    }
+                    else {
                         alert("No record existed");
                     }
 

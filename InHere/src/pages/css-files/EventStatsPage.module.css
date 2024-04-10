@@ -1,0 +1,37 @@
+.heading {
+    margin-top: 20px;
+    margin-left: 5%;
+}
+
+.chartContainer {
+    width: 100%; /* Adjust width as needed */
+    display: flex;
+
+    /*border: 3px solid black; !* Just for visualization *!*/
+}
+
+.chartBox {
+    /*width: 25%; !* Adjust width as needed *!*/
+
+    height: inherit;
+
+    /*border: 2px solid orange; !* Just for visualization *!*/
+
+    /*margin-top: 20px;*/
+    margin-left: 5%;
+
+    align-content: center;
+}
+
+.legendBox {
+    width: 60%; /* Adjust width as needed */
+
+    /*border: 2px solid goldenrod; !* Just for visualization *!*/
+
+    /*margin-top: 20px;*/
+    margin-left: 5%;
+    margin-right: 5%;
+
+    align-content: center;
+    justify-content: center;
+}
