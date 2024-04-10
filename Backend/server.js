@@ -96,6 +96,26 @@ app.post('/signUp', (req, res) => {
     })
 })
 
+//TaskTracker Events Get:
+app.post('/taskTracker', (req, res) => {
+
+    const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
+
+    // Query to get events
+    db.query(sql, req.body.userID, (err, result) => {
+        if(err) {
+            console.error("Error receiving data from the database:", err);
+            return res.status(500).json({ error: "Error receiving data from the database" });
+        }
+        if(result.length > 0) {
+            return res.status(200).json({
+                message: "Query Successful",
+                events: result
+            });
+        }
+    })
+})
+
 // Event Statistics Get:
 // Assumptions: Status == 0 is incompleted, Status == 1 is completed
 /*
