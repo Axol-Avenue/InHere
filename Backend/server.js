@@ -109,7 +109,7 @@ SELECT 'Completed Count' as Condition_Name, COUNT(*) as count
 FROM Task
 WHERE UserID = 42 && Status = 1;
 */
-app.get('/eventStats', (req, res) => {
+app.post('/eventStats', (req, res) => {
     const userId = req.query.userId; // Get the UserID from the query parameters
 
     if (!userId) {
