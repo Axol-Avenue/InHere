@@ -1,31 +1,32 @@
-import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import listPlugin  from "@fullcalendar/list";
+import http from "../../http-common.js";
 
 // Copy of Kris' dummy calendar, just with a focus on the list view
 function Calendar() {
-    // Event placeholders
-    const events = [
-        {
-            title: 'Event 1',
-            start: '2024-04-01',
-            end: '2024-04-02'
-        },
-        {
-            title: 'Event 2',
-            start: '2024-04-09',
-            end: '2024-04-11'
-        }
-    ];
-
-    const [isOpen, setIsOpen ] = useState(false)
 
     return <div>
         <FullCalendar
             plugins={[listPlugin]}
             initialView={'listWeek'}
             height={"90vh"}
-            events={events}
+            events={() =>
+            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/taskTracker', {userID: 42})
+                .then(res => {
+
+                    console.log(res);
+                    if(res.data.message === 'Query Successful') {
+                        return(Object.values(res.data.result[0])[0]);
+                    } else {
+                        alert("No record existed (listCalendar)");
+                    }
+
+                })
+                .catch(err =>
+                {
+                    console.log("axios error (listCalendar)");
+                    console.log(err)
+                })}
         />
     </div>
 }
