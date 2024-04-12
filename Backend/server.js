@@ -133,7 +133,7 @@ app.post('/eventStats', (req, res) => {
 
     const sqlQuery1 = "(SELECT COUNT(*) as `Total Count` FROM Task WHERE `UserID` = ?) as `Total_Count`";
     const sqlQuery2 = "(SELECT COUNT(*) as `Completed Count` FROM Task WHERE `UserID` = ? AND `Status` = 1) as `Completed_Count`";
-    :wq
+
     const sqlQuery = "SELECT " + sqlQuery1 + ", " + sqlQuery2;
 
     // "SELECT `Total Count` as Condition_Name, COUNT(*) as count FROM Task WHERE `UserID` = ? UNION ALL SELECT `Completed Count` as Condition_Name, COUNT(*) as count FROM Task WHERE `UserID` = ? AND `Status` = 1";
