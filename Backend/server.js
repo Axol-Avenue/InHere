@@ -116,20 +116,9 @@ app.post('/taskTracker', (req, res) => {
     })
 })
 
-// Event Statistics Get:
-// Assumptions: Status == 0 is incompleted, Status == 1 is completed
-/*
-SELECT 'Total Count' as Condition_Name, COUNT(*) as count
-FROM Task
-WHERE UserID = 42
-
-UNION ALL
-
-SELECT 'Completed Count' as Condition_Name, COUNT(*) as count
-FROM Task
-WHERE UserID = 42 && Status = 1;
-*/
+// Event Statistics:
 app.post('/eventStats', (req, res) => {
+    // Assumptions: Status == 0 is incompleted, Status == 1 is completed
 
     const sqlQuery1 = "(SELECT COUNT(*) as `Total Count` FROM Task WHERE `UserID` = ?) as `Total_Count`";
     const sqlQuery2 = "(SELECT COUNT(*) as `Completed Count` FROM Task WHERE `UserID` = ? AND `Status` = 1) as `Completed_Count`";
@@ -153,6 +142,7 @@ app.post('/eventStats', (req, res) => {
         else if(result.length > 0)
         {
             return res.status(200).json({
+                message: "Query Successful",
                 results: result
             });
         }
