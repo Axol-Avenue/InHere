@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import ProgressChart from "../components/Event Stats/ProgressChart.jsx";
 import styles from "./css-files/EventStatsPage.module.css"
@@ -50,23 +50,16 @@ function EventStatsPage () {
     };
 
     // Get Task Completion Data:
-    fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
+    useEffect(() =>
+    {
+        fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
+    }, []); // Empty dependency array ensures this effect runs only once after initial render
 
-    // // Percentage Calculations:
-    //
-    // const totalTaskCount = eventStats.find(
-    //     item =>
-    //         item.Condition_Name === 'Total Count').count;
-    //
-    // const completedTaskCount = eventStats.find(
-    //     item =>
-    //         item.Condition_Name === 'Completed Count').count;
-    //
-    // const incompleteTaskCount = totalTaskCount - completedTaskCount;
-    //
-    // const percentage = (completedTaskCount /  totalTaskCount) * 100;
+    if (!eventStats) {
+        return <div>Loading...</div>; // Placeholder for when data is being fetched
+    }
 
-    // DUMMY DATA:
+    // Populate Data:
     const total_count = eventStats.results[0].Total_Count;
     const completed_count = eventStats.results[0].Completed_Count;
 
