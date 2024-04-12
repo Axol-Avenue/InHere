@@ -21,7 +21,7 @@ function EventStatsPage () {
             ]
         }
 
-    const [eventStats, setEventStats] = useState(TEST_RESULTS);
+    const [eventStats, setEventStats] = useState(null);
 
 
     // Get Task Completion Data:
@@ -60,9 +60,8 @@ function EventStatsPage () {
     }
 
     // Populate Data:
-    const total_count = eventStats.results[0].Total_Count;
-    const completed_count = eventStats.results[0].Completed_Count;
-
+    const total_count = eventStats.results[0] && eventStats.results[0].Total_Count;
+    const completed_count = eventStats.results[0] && eventStats.results[0].Completed_Count;
     const incomplete_count = total_count - completed_count;
 
     const percentage = Math.trunc((completed_count /  total_count) * 100);
