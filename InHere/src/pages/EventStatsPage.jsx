@@ -1,18 +1,20 @@
 import React from 'react';
 
+import {useState} from 'react';
+
 import ProgressChart from "../components/Event Stats/ProgressChart.jsx";
 import styles from "./css-files/EventStatsPage.module.css"
 import Legend from "../components/Event Stats/Legend.jsx";
 
 import http from "../http-common.js";
 
-// Variable Declarations:
+// // Variable Declarations:
 // const [eventStats, setEventStats] = useState(null);
 //
 // const TEST_USER_ID = 65;
-
-
-// Get Task Completion Data:
+//
+//
+// // Get Task Completion Data:
 // const fetchData = (userId) => {
 //
 //     // Call API w/ Axios:
@@ -26,65 +28,77 @@ import http from "../http-common.js";
 //             console.log("axios error");
 //             console.log(err)
 //         });
+//
+//     http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/taskTracker', {userID: 42})
+//         .then(res => {
+//
+//             console.log(res);
+//             if(res.data.message === 'Query Successful') {
+//                 return(Object.values(res.data.result[0])[0]);
+//             } else {
+//                 alert("No record existed (listCalendar)");
+//             }
+//
+//         })
+//         .catch(err =>
+//         {
+//             console.log("axios error (listCalendar)");
+//             console.log(err)
+//         })
 // };
 
 
 // Display Event Stats Page:
-// function EventStatsPage () {
-//     // // Get Task Completion Data:
-//     // fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
-//     //
-//     // // Percentage Calculations:
-//     // const totalTaskCount = eventStats.find(
-//     //     item =>
-//     //         item.Condition_Name === 'Total Count').count;
-//     //
-//     // const completedTaskCount = eventStats.find(
-//     //     item =>
-//     //         item.Condition_Name === 'Completed Count').count;
-//     //
-//     // const incompleteTaskCount = totalTaskCount - completedTaskCount;
-//     //
-//     // const percentage = (completedTaskCount /  totalTaskCount) * 100;
-//
-//     // DUMMY DATA:
-//     const totalTaskCount = 4;
-//     const completedTaskCount = 3;
-//     const incompleteTaskCount = 1;
-//
-//     const percentage = (completedTaskCount /  totalTaskCount) * 100;
-//
-//
-//     // Parameters to Populate Progress Charts and Legends:
-//     const legendProps = {
-//         total_count: totalTaskCount,
-//         completed_count: completedTaskCount,
-//         incomplete_count: incompleteTaskCount
-//     };
-//
-//     return (
-//         <>
-//             <h2 className={styles.heading}>Task Completion:</h2>
-//
-//             <div className={styles.chartContainer}>
-//
-//                 <div className={styles.chartBox}>
-//                     <ProgressChart percentage={percentage}  />
-//                 </div>
-//
-//                 <div className={styles.legendBox}>
-//                     <Legend data={legendProps}/>
-//                 </div>
-//
-//             </div>
-//         </>
-//     );
-// }
+function EventStatsPage () {
+    // // Get Task Completion Data:
+    // fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
+    //
+    // // Percentage Calculations:
+    // const totalTaskCount = eventStats.find(
+    //     item =>
+    //         item.Condition_Name === 'Total Count').count;
+    //
+    // const completedTaskCount = eventStats.find(
+    //     item =>
+    //         item.Condition_Name === 'Completed Count').count;
+    //
+    // const incompleteTaskCount = totalTaskCount - completedTaskCount;
+    //
+    // const percentage = (completedTaskCount /  totalTaskCount) * 100;
 
-function EventStatsPage() {
+    // DUMMY DATA:
+    const totalTaskCount = 4;
+    const completedTaskCount = 2;
+    const incompleteTaskCount = 2;
+
+    const percentage = (completedTaskCount /  totalTaskCount) * 100;
+
+
+    // Parameters to Populate Progress Charts and Legends:
+    const legendProps = {
+        total_count: totalTaskCount,
+        completed_count: completedTaskCount,
+        incomplete_count: incompleteTaskCount
+    };
+
     return (
-        <h1>Event Stats</h1>
-    )
+        <>
+            <h2 className={styles.heading}>Task Completion:</h2>
+
+            <div className={styles.chartContainer}>
+
+                <div className={styles.chartBox}>
+                    <ProgressChart percentage={percentage}  />
+                </div>
+
+                <div className={styles.legendBox}>
+                    <Legend data={legendProps}/>
+                </div>
+
+            </div>
+        </>
+    );
 }
+
 
 export default EventStatsPage;
