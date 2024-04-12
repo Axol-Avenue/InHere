@@ -125,8 +125,6 @@ app.post('/eventStats', (req, res) => {
 
     const sqlQuery = "SELECT " + sqlQuery1 + ", " + sqlQuery2;
 
-    // "SELECT `Total Count` as Condition_Name, COUNT(*) as count FROM Task WHERE `UserID` = ? UNION ALL SELECT `Completed Count` as Condition_Name, COUNT(*) as count FROM Task WHERE `UserID` = ? AND `Status` = 1";
-
     // Query to get events
     db.query(sqlQuery, [req.body.userID, req.body.userID], (err, result) => {
         if(err)

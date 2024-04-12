@@ -6,54 +6,51 @@ import Legend from "../components/Event Stats/Legend.jsx";
 
 import http from "../http-common.js";
 
-// Global Declarations:
-const TEST_USER_ID = 65;
-
-const TEST_RESULTS =
-    {
-        "results":[
-            {
-                "Total_Count": 13,
-                "Completed_Count": 3
-            }
-        ]
-    }
-
-// Get Task Completion Data:
-function fetchData(userId)  {
-
-    http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/eventStats', {userID: userId})
-        .then(res => {
-
-            console.log(res);
-
-            if(res.data.message === 'Query Successful')
-            {
-                return res.data.results;
-            }
-            else
-            {
-                alert("Query Failed!");
-            }
-
-        })
-        .catch(err =>
-        {
-            console.log("axios error (event statistics)");
-            console.log(err)
-        })
-
-    return null;
-}
-
-
 // Display Event Stats Page:
 function EventStatsPage () {
-    // Local Declarations:
+    // Global Declarations:
+    const TEST_USER_ID = 65;
+
+    const TEST_RESULTS =
+        {
+            "results":[
+                {
+                    "Total_Count": 13,
+                    "Completed_Count": 3
+                }
+            ]
+        }
+
     const [eventStats, setEventStats] = useState(TEST_RESULTS);
 
+
     // Get Task Completion Data:
-    setEventStats(fetchData(TEST_USER_ID)); // Call the fetchData function with the desired UserID
+    const fetchData = (userId) => {
+
+        http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/eventStats', {userID: userId})
+            .then(res => {
+
+                console.log(res);
+
+                if(res.data.message === 'Query Successful')
+                {
+                    setEventStats(res.data.results);
+                }
+                else
+                {
+                    alert("Query Failed!");
+                }
+
+            })
+            .catch(err =>
+            {
+                console.log("axios error (event statistics)");
+                console.log(err)
+            })
+    };
+
+    // Get Task Completion Data:
+    fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
 
     // // Percentage Calculations:
     //
