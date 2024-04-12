@@ -38,7 +38,7 @@ function EventStatsPage () {
 
                 if(res.data.message === 'Query Successful')
                 {
-                    setEventStats(res.data.results);
+                    setEventStats(res.data);
                 }
                 else
                 {
