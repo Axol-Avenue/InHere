@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {useState} from 'react';
 
 import ProgressChart from "../components/Event Stats/ProgressChart.jsx";
@@ -8,52 +6,57 @@ import Legend from "../components/Event Stats/Legend.jsx";
 
 import http from "../http-common.js";
 
-// // Variable Declarations:
-// const [eventStats, setEventStats] = useState(null);
-//
-// const TEST_USER_ID = 65;
-//
-//
-// // Get Task Completion Data:
-// const fetchData = (userId) => {
-//
-//     // Call API w/ Axios:
-//     http.get(`https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/eventStats?userId=${userId}`)
-//         .then(res => {
-//             console.log(res);
-//             setEventStats(res.data);
-//         })
-//         .catch(err =>
-//         {
-//             console.log("axios error");
-//             console.log(err)
-//         });
-//
-//     http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/taskTracker', {userID: 42})
-//         .then(res => {
-//
-//             console.log(res);
-//             if(res.data.message === 'Query Successful') {
-//                 return(Object.values(res.data.result[0])[0]);
-//             } else {
-//                 alert("No record existed (listCalendar)");
-//             }
-//
-//         })
-//         .catch(err =>
-//         {
-//             console.log("axios error (listCalendar)");
-//             console.log(err)
-//         })
-// };
+// Global Declarations:
+const TEST_USER_ID = 65;
+
+const TEST_RESULTS =
+    {
+        "results":[
+            {
+                "Total_Count": 13,
+                "Completed_Count": 3
+            }
+        ]
+    }
+
+// Get Task Completion Data:
+function fetchData(userId)  {
+
+    http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/eventStats', {userID: userId})
+        .then(res => {
+
+            console.log(res);
+
+            if(res.data.message === 'Query Successful')
+            {
+                return res.data.results;
+            }
+            else
+            {
+                alert("Query Failed!");
+            }
+
+        })
+        .catch(err =>
+        {
+            console.log("axios error (event statistics)");
+            console.log(err)
+        })
+
+    return null;
+}
 
 
 // Display Event Stats Page:
 function EventStatsPage () {
-    // // Get Task Completion Data:
-    // fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
-    //
+    // Local Declarations:
+    const [eventStats, setEventStats] = useState(TEST_RESULTS);
+
+    // Get Task Completion Data:
+    setEventStats(fetchData(TEST_USER_ID)); // Call the fetchData function with the desired UserID
+
     // // Percentage Calculations:
+    //
     // const totalTaskCount = eventStats.find(
     //     item =>
     //         item.Condition_Name === 'Total Count').count;
@@ -67,18 +70,19 @@ function EventStatsPage () {
     // const percentage = (completedTaskCount /  totalTaskCount) * 100;
 
     // DUMMY DATA:
-    const totalTaskCount = 4;
-    const completedTaskCount = 2;
-    const incompleteTaskCount = 2;
+    const total_count = eventStats.results[0].Total_Count;
+    const completed_count = eventStats.results[0].Completed_Count;
 
-    const percentage = (completedTaskCount /  totalTaskCount) * 100;
+    const incomplete_count = total_count - completed_count;
+
+    const percentage = Math.trunc((completed_count /  total_count) * 100);
 
 
     // Parameters to Populate Progress Charts and Legends:
     const legendProps = {
-        total_count: totalTaskCount,
-        completed_count: completedTaskCount,
-        incomplete_count: incompleteTaskCount
+        total_count: total_count,
+        completed_count: completed_count,
+        incomplete_count: incomplete_count
     };
 
     return (
