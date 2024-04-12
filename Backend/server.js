@@ -129,34 +129,32 @@ SELECT 'Completed Count' as Condition_Name, COUNT(*) as count
 FROM Task
 WHERE UserID = 42 && Status = 1;
 */
-// app.post('/eventStats', (req, res) => {
-//     const userId = req.query.userId; // Get the UserID from the query parameters
-//
-//     if (!userId) {
-//         res.status(400).json({ error: 'UserID is required' });
-//         return;
-//     }
-//
-//     const sqlQuery = `
-//         SELECT 'Total Count' as Condition_Name, COUNT(*) as count
-//         FROM Task
-//         WHERE UserID = ${userId}
-//         UNION ALL
-//         SELECT 'Completed Count' as Condition_Name, COUNT(*) as count
-//         FROM Task
-//         WHERE UserID = ${userId} AND Status = 1;
-//     `;
-//
-//     db.query(sqlQuery, (error, results) => {
-//         if (error) {
-//             res.status(500).json({ error: 'Error executing SQL query' });
-//         }
-//         else
-//         {
-//             res.json(results);
-//         }
-//     });
-// });
+app.post('/eventStats', (req, res) => {
+
+    const sqlQuery = "SELECT COUNT(*) FROM Task WHERE `UserID` = ?";
+
+    // "SELECT `Total Count` as Condition_Name, COUNT(*) as count FROM Task WHERE `UserID` = ? UNION ALL SELECT `Completed Count` as Condition_Name, COUNT(*) as count FROM Task WHERE `UserID` = ? AND `Status` = 1";
+
+    // Query to get events
+    db.query(sqlQuery, req.body.userID, (err, result) => {
+        if(err)
+        {
+            console.error("Error receiving data from the database:", err);
+            return res.status(500).json(
+                {
+                    error: "Error receiving data from the database",
+                    err: err
+                }
+            );
+        }
+        else if(result.length > 0)
+        {
+            return res.status(200).json({
+                results: result
+            });
+        }
+    });
+});
 
 
 // Allows Express to run on HTTPS instead of HTTP
