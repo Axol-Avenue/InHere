@@ -3,7 +3,14 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 const https = require("https");
+var app = express();
 
+app.use(express.json());
+app.use( cors() );
+
+// --------------------
+// Database Connection:
+// --------------------
 require('dotenv').config(); // database connection variables
 
 const bcrypt = require("bcrypt");
@@ -12,10 +19,6 @@ var privateKey = fs.readFileSync('./ssl/private.key', 'utf8');
 var certificate = fs.readFileSync('./ssl/certificate.crt', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
-var app = express();
-
-app.use(express.json());
-app.use( cors() );
 
 var httpsServer = https.createServer(credentials, app);
 const saltRounds = 10;
@@ -28,6 +31,10 @@ const db = mysql.createPool({
 });
 
 app.options('*', cors())
+
+// --------------------
+// Database API Calls::
+// --------------------
 
 // Sign-in Post
 app.post('/', (req, res) => {
@@ -89,19 +96,57 @@ app.post('/signUp', (req, res) => {
     })
 })
 
-// Event Statistics Get:
-// Assumptions: Status == 0 is incompleted, Status == 1 is completed
-/*
-SELECT 'Total Count' as Condition_Name, COUNT(*) as count
-FROM Task
-WHERE UserID = 42
+//TaskTracker Events Get:
+app.post('/taskTracker', (req, res) => {
 
-UNION ALL
+    const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
 
-SELECT 'Completed Count' as Condition_Name, COUNT(*) as count
-FROM Task
-WHERE UserID = 42 && Status = 1;
-*/
+    // Query to get events
+    db.query(sql, req.body.userID, (err, result) => {
+        if(err) {
+            console.error("Error receiving data from the database:", err);
+            return res.status(500).json({ error: "Error receiving data from the database" });
+        }
+        if(result.length > 0) {
+            return res.status(200).json({
+                message: "Query Successful",
+                events: result
+            });
+        }
+    })
+})
+
+// Event Statistics:
+app.post('/eventStats', (req, res) => {
+    // Assumptions: Status == 0 is incompleted, Status == 1 is completed
+
+    const sqlQuery1 = "(SELECT COUNT(*) as `Total Count` FROM Task WHERE `UserID` = ?) as `Total_Count`";
+    const sqlQuery2 = "(SELECT COUNT(*) as `Completed Count` FROM Task WHERE `UserID` = ? AND `Status` = 1) as `Completed_Count`";
+
+    const sqlQuery = "SELECT " + sqlQuery1 + ", " + sqlQuery2;
+
+    // Query to get events
+    db.query(sqlQuery, [req.body.userID, req.body.userID], (err, result) => {
+        if(err)
+        {
+            console.error("Error receiving data from the database:", err);
+            return res.status(500).json(
+                {
+                    error: "Error receiving data from the database",
+                    err: err
+                }
+            );
+        }
+        else if(result.length > 0)
+        {
+            return res.status(200).json({
+                message: "Query Successful",
+                results: result
+            });
+        }
+    });
+});
+
 
 // Allows Express to run on HTTPS instead of HTTP
 httpsServer.listen(3307, () => {

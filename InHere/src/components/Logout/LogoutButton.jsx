@@ -1,7 +1,8 @@
 import styles from "./LogoutButton.module.css"
 import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-function Logout() {
+function LogoutButton() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -14,9 +15,10 @@ function Logout() {
             className={styles.button}
             onClick={handleLogout}
         >
-            Logout
+            <LogoutIcon  />
         </button>
     );
+
 }
 
-export default Logout;
+export default LogoutButton;
