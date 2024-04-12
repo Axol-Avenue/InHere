@@ -9,19 +9,9 @@ import http from "../http-common.js";
 // Display Event Stats Page:
 function EventStatsPage () {
     // Global Declarations:
-    const TEST_USER_ID = 65;
+    const TEST_USER_ID = 65; // TODO: REMOVE HARDCODE USER ID
 
-    const TEST_RESULTS =
-        {
-            "results":[
-                {
-                    "Total_Count": 13,
-                    "Completed_Count": 3
-                }
-            ]
-        }
-
-    const [eventStats, setEventStats] = useState(null);
+    const [eventStats, setEventStats] = useState(null); // holds response from the database
 
 
     // Get Task Completion Data:
