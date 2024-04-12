@@ -27,7 +27,11 @@ function EventStatsPage () {
     // Get Task Completion Data:
     const fetchData = (userId) => {
 
-        http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/eventStats', {userID: userId})
+        const data = {
+            userID: userId
+        }
+
+        http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/eventStats', data)
             .then(res => {
 
                 console.log(res);
@@ -60,11 +64,12 @@ function EventStatsPage () {
     }
 
     // Populate Data:
-    const total_count = eventStats.results[0] && eventStats.results[0].Total_Count;
-    const completed_count = eventStats.results[0] && eventStats.results[0].Completed_Count;
+    const total_count = eventStats.results && eventStats.results.length > 0 ? eventStats.results[0].Total_Count : 0;
+    const completed_count = eventStats.results && eventStats.results.length > 0 ? eventStats.results[0].Completed_Count : 0;
+
     const incomplete_count = total_count - completed_count;
 
-    const percentage = Math.trunc((completed_count /  total_count) * 100);
+    const percentage = total_count === 0 || completed_count === 0 ? 0 : Math.trunc((completed_count /  total_count) * 100);
 
 
     // Parameters to Populate Progress Charts and Legends:
