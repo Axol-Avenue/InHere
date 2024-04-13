@@ -19,7 +19,20 @@ function Calendar() {
 
         return http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/taskTracker', data)
             .then(res => {
-                return (Object.values(res.data.events[0])[0]);
+
+                let events = [];
+                console.log(res.data.events.length);
+                for (var i = 0; i < res.data.events.length; i++) {
+                    events.push({
+                        title: (res.data.events)[i].Title,
+                        start: ((res.data.events)[i].DueDate).split("T")[0],
+                        extendedProps: {
+                            status: (res.data.events)[i].Status,
+                            priority: (res.data.events)[i].PriorityID
+                        }
+                    });
+                }
+                return(events);
             })
             .catch(err => {
                 console.log("axios error (listCalendar)");
