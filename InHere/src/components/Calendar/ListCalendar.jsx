@@ -2,7 +2,6 @@ import FullCalendar from "@fullcalendar/react";
 import listPlugin from "@fullcalendar/list";
 import http from "../../http-common.js";
 
-// Copy of Kris' dummy calendar, just with a focus on the list view
 function Calendar() {
 
     const getEvents = (fetchInfo) => {
@@ -21,7 +20,6 @@ function Calendar() {
             .then(res => {
 
                 let events = [];
-                console.log(res.data.events.length);
                 for (var i = 0; i < res.data.events.length; i++) {
                     events.push({
                         title: (res.data.events)[i].Title,
@@ -40,13 +38,22 @@ function Calendar() {
             });
     };
 
+    function customEvents(args) {
+
+        return <div>
+            <a>{args.event.title}</a>
+            <button style={{border: 'none', float: 'right'}}>Delete Task</button>
+        </div>
+    }
+
     return <div>
-        <FullCalendar
+    <FullCalendar
             plugins={[listPlugin]}
             initialView={'listWeek'}
-            height={"90vh"}
+            height={"85vh"}
             displayEventTime={false}
             events={(fetchInfo) => getEvents(fetchInfo)}
+            eventContent={(args) => customEvents(args)}
         />
     </div>
 }
