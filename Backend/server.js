@@ -99,10 +99,16 @@ app.post('/signUp', (req, res) => {
 //TaskTracker Events Get:
 app.post('/taskTracker', (req, res) => {
 
-    const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
+    const sql = "SELECT * FROM Task WHERE `UserID` = ? AND `DueDate` BETWEEN ? AND ?";
+
+    const values = [
+        req.body.userID,
+        req.body.startDate,
+        req.body.endDate
+    ]
 
     // Query to get events
-    db.query(sql, req.body.userID, (err, result) => {
+    db.query(sql, values, (err, result) => {
         if(err) {
             console.error("Error receiving data from the database:", err);
             return res.status(500).json({ error: "Error receiving data from the database" });
