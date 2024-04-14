@@ -42,12 +42,13 @@ function Calendar() {
 
         return <div>
             <a>{args.event.title}</a>
-            <button style={{border: 'none', float: 'right'}}>Delete Task</button>
+            <button onClick="deleteTask()" style={{border: 'none', float: 'right'}}>Delete Task</button>
+            <button onClick="modifyTask()" style={{border: 'none', float: 'right', marginRight: '10px'}}>Modify Task</button>
         </div>
     }
 
     return <div>
-    <FullCalendar
+        <FullCalendar
             plugins={[listPlugin]}
             initialView={'listWeek'}
             height={"85vh"}
