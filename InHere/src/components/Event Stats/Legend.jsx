@@ -16,7 +16,7 @@ function Legend (props) {
                 </div>
 
                 <div className={styles.legendEntryCount}>
-                    <h1>{props.data.total_count}</h1>
+                    <h1>{props.data.incomplete_count}</h1>
                 </div>
             </div>
 
@@ -43,7 +43,7 @@ function Legend (props) {
                 </div>
 
                 <div className={styles.legendEntryCount}>
-                    <h1>{props.data.incomplete_count}</h1>
+                    <h1>{props.data.total_count}</h1>
                 </div>
             </div>
         </>
