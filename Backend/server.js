@@ -153,6 +153,30 @@ app.post('/eventStats', (req, res) => {
     });
 });
 
+// Calendar Events
+app.post('/calendar', (req, res) => {
+
+    const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
+
+    /*const data = [
+        req.body.Data
+    ]*/
+
+    // Query to get events
+    db.query(sql, req.body.userID, (err, result) => {
+        if(err) {
+            console.error("Error receiving data from the database:", err);
+            return res.status(500).json({ error: "Error receiving data from the database" });
+        }
+        if(result.length > 0) {
+            return res.status(200).json({
+                message: "Query Successful",
+                events: result
+            });
+        }
+    })
+})
+
 
 // Allows Express to run on HTTPS instead of HTTP
 httpsServer.listen(3307, () => {
