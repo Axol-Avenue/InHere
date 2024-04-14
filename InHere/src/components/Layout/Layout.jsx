@@ -9,8 +9,8 @@ const Layout =() =>{
     const { pathname } = useLocation();
     let headerTitle;
     switch (pathname) {
-        case "/homePage":
-            headerTitle = "Home Page";
+        case "/calendar":
+            headerTitle = "Calendar Page";
             break;
         case "/taskTracker":
             headerTitle = "Task Page";
@@ -18,8 +18,8 @@ const Layout =() =>{
         case "/eventStats":
             headerTitle = "Event Stats Page";
             break;
-        case "/calendar":
-            headerTitle = "Calendar Page";
+        case "/accountPage":
+            headerTitle = "Account Page";
             break;
         default:
             headerTitle = "Empty Page";

@@ -2,9 +2,11 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
+import 'bootswatch/dist/darkly/bootstrap.min.css';
 import "./App.css";
 
-import HomePage from "./pages/HomePage.jsx";
+
+import AccountPage from "./pages/AccountPage.jsx";
 import TaskTrackerPage from "./pages/TaskTrackerPage.jsx";
 import EventStatsPage from "./pages/EventStatsPage.jsx";
 import CalendarPage from "./pages/CalendarPage.jsx";
@@ -19,10 +21,10 @@ function App() {
                     <Route path="/" exact element={ <LoginPage/> }/>
                     <Route path="/signUp" element={ <SignUpPage/> }/>
                     <Route element={<Layout/>}>
-                        <Route path="/homePage" element={ <HomePage/> }/>
+                        <Route path="/calendar" element={ <CalendarPage/> }/>
                         <Route path="/taskTracker" element={ <TaskTrackerPage/> }/>
                         <Route path="/eventStats" element={ <EventStatsPage/> }/>
-                        <Route path="/calendar" element={ <CalendarPage/> }/>
+                        <Route path="/accountPage" element={ <AccountPage/> }/>
                     </Route>
                 </Routes>
         </div>
