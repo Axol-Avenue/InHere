@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import interactinoPlugin from "@fullcalendar/interaction";
+import interactionPlugin from "@fullcalendar/interaction";
 import Modal from "./AddEventModal.jsx";
+import http from "../../http-common.js";
 
 function Calendar() {
     // Event placeholders
-    const events = [
+    /*const events = [
         {
             title: 'Event 1',
             start: '2024-04-01',
@@ -18,13 +19,50 @@ function Calendar() {
             start: '2024-04-09',
             end: '2024-04-11'
         }
-    ];
+    ];*/
+
+    /*const events =
+
+            [
+                {
+                    "id": "821",
+                    "end": "2024-04-06 14:00:00",
+                    "start": "2024-04-06 06:00:00",
+                    "title": "Test event",
+                    "allDay": "true"
+                },
+                {
+                    "id": "822",
+                    "end": "2024-04-10 21:00:00",
+                    "start": "2024-04-10 16:00:00",
+                    "title": "Test event 2",
+                    "allDay": ""
+                }
+            ]
+        ;*/
+
+    const getEvents = () => {
+
+        let data = {
+            userID: 42
+        }
+
+        return http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/calendar', data)
+            .then(res => {
+                console.log(res.data.events[0].Data);
+                return(res.data.events[0].Data);
+            })
+            .catch(err => {
+                console.log("axios error (Calendar)");
+                console.log(err)
+            });
+    };
 
     const [isOpen, setIsOpen ] = useState(false)
 
     return <div>
         <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactinoPlugin]}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView={'dayGridMonth'}
             headerToolbar={{
                 start: "today prev,next",
@@ -32,7 +70,7 @@ function Calendar() {
                 end: "dayGridMonth,timeGridWeek,timeGridDay"
             }}
             height={"89vh"}
-            events={events}
+            events={getEvents}
         />
         <button onClick={() => setIsOpen(true)}>Add Event</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
