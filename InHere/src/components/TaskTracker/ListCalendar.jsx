@@ -4,6 +4,10 @@ import http from "../../http-common.js";
 
 function Calendar() {
 
+    const createTask = () => {
+
+    }
+
     const getEvents = (fetchInfo) => {
 
         // Sets fetchInfo's end date to the day before
@@ -16,7 +20,7 @@ function Calendar() {
             endDate: (fetchInfo.end).getFullYear() + "-" + ((fetchInfo.end).getMonth() + 1) + "-" + (fetchInfo.end).getDate()
         }
 
-        return http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/taskTracker', data)
+        return http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/readTasks', data)
             .then(res => {
 
                 let events = [];
@@ -25,6 +29,7 @@ function Calendar() {
                         title: (res.data.events)[i].Title,
                         start: ((res.data.events)[i].DueDate).split("T")[0],
                         extendedProps: {
+                            taskID: (res.data.events)[i].TaskID,
                             status: (res.data.events)[i].Status,
                             priority: (res.data.events)[i].PriorityID
                         }
@@ -38,12 +43,26 @@ function Calendar() {
             });
     };
 
+    const deleteTask = (currentTask) => {
+        console.log(currentTask);
+    }
+
+    const updateTask = (currentTask) => {
+        console.log(currentTask);
+    }
+
     function customEvents(args) {
+
+        const currentTask = args.event.extendedProps.taskID;
 
         return <div>
             <a>{args.event.title}</a>
-            <button onClick="deleteTask()" style={{border: 'none', float: 'right'}}>Delete Task</button>
-            <button onClick="modifyTask()" style={{border: 'none', float: 'right', marginRight: '10px'}}>Modify Task</button>
+
+            <button onClick={() => deleteTask(currentTask)}
+                    style={{border: 'none', float: 'right'}}>Delete Task</button>
+
+            <button onClick={() => updateTask(currentTask)}
+                    style={{border: 'none', float: 'right', marginRight: '10px'}}>Modify Task</button>
         </div>
     }
 
