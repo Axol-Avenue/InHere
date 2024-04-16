@@ -32,9 +32,9 @@ const db = mysql.createPool({
 
 app.options('*', cors())
 
-// --------------------
-// Database API Calls::
-// --------------------
+// ----------------------
+// Sign-in/up API Calls::
+// ----------------------
 
 // Sign-in Post
 app.post('/', (req, res) => {
@@ -96,8 +96,37 @@ app.post('/signUp', (req, res) => {
     })
 })
 
-//TaskTracker Events Get:
-app.post('/taskTracker', (req, res) => {
+// ----------------------
+// Task CRUD Operations::
+// ----------------------
+
+//TaskTracker Tasks Create:
+app.post('/createTask', (req, res) => {
+
+    const sql = "INSERT INTO Task (`Title`, `DueDate`, `UserID`, `PriorityID`) VALUES (?, ?, ?, ?)";
+
+    const values = [
+        req.body.title,
+        req.body.date,
+        req.body.userID,
+        req.body.priority
+    ]
+
+    // Query to remove task entry
+    db.query(sql, values, (err, result) => {
+        if(err) {
+            console.error("Error creating data in the database:", err);
+            return res.status(500).json({ error: "Error creating data in the database" });
+        }
+        return res.status(200).json({
+            message: "Creation Successful",
+            result: result
+        });
+    })
+})
+
+//TaskTracker Tasks Read:
+app.post('/readTasks', (req, res) => {
 
     const sql = "SELECT * FROM Task WHERE `UserID` = ? AND `DueDate` BETWEEN ? AND ?";
 
@@ -121,6 +150,91 @@ app.post('/taskTracker', (req, res) => {
         }
     })
 })
+
+//TaskTracker Tasks Update:
+app.post('/updateTask', (req, res) => {
+
+    // UserID check is included just in case.
+    // We don't want somebody modifying a task that isn't theirs.
+    const sql = "UPDATE Task SET `Title` = ?, `DueDate` = ?, `PriorityID` = ? WHERE `UserID` = ? AND `TaskID` = ?";
+
+    const values = [
+        req.body.title,
+        req.body.date,
+        req.body.priority,
+        req.body.userID,
+        req.body.taskID
+    ]
+
+    // Query to remove task entry
+    db.query(sql, values, (err, result) => {
+        if(err) {
+            console.error("Error modifying data from the database:", err);
+            return res.status(500).json({ error: "Error modifying data from the database" });
+        }
+        return res.status(200).json({
+            message: "Modification Successful",
+            result: result
+        });
+    })
+})
+
+//TaskTracker Tasks Delete:
+app.post('/deleteTask', (req, res) => {
+
+    // UserID check is included just in case.
+    // We don't want somebody deleting a task that isn't theirs.
+    const sql = "DELETE FROM Task WHERE `UserID` = ? AND `TaskID` = ?";
+
+    const values = [
+        req.body.userID,
+        req.body.taskID
+    ]
+
+    // Query to remove task entry
+    db.query(sql, values, (err, result) => {
+        if(err) {
+            console.error("Error removing data from the database:", err);
+            return res.status(500).json({ error: "Error removing data from the database" });
+        }
+        return res.status(200).json({
+            message: "Deletion Successful",
+            result: result
+        });
+    })
+})
+
+// --------------------------
+// Calendar CRUD Operations::
+// --------------------------
+
+// Calendar Events
+app.post('/calendar', (req, res) => {
+
+    const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
+
+    /*const data = [
+        req.body.Data
+    ]*/
+
+    // Query to get events
+    db.query(sql, req.body.userID, (err, result) => {
+        if(err) {
+            console.error("Error receiving data from the database:", err);
+            return res.status(500).json({ error: "Error receiving data from the database" });
+        }
+        if(result.length > 0) {
+            return res.status(200).json({
+                message: "Query Successful",
+                events: result
+            });
+        }
+    })
+})
+
+// ---------------------------
+// Event Statistics API Call::
+// ---------------------------
 
 // Event Statistics:
 app.post('/eventStats', (req, res) => {
@@ -152,31 +266,6 @@ app.post('/eventStats', (req, res) => {
         }
     });
 });
-
-// Calendar Events
-app.post('/calendar', (req, res) => {
-
-    const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
-
-    /*const data = [
-        req.body.Data
-    ]*/
-
-    // Query to get events
-    db.query(sql, req.body.userID, (err, result) => {
-        if(err) {
-            console.error("Error receiving data from the database:", err);
-            return res.status(500).json({ error: "Error receiving data from the database" });
-        }
-        if(result.length > 0) {
-            return res.status(200).json({
-                message: "Query Successful",
-                events: result
-            });
-        }
-    })
-})
-
 
 // Allows Express to run on HTTPS instead of HTTP
 httpsServer.listen(3307, () => {
