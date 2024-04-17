@@ -45,9 +45,6 @@ export default function Modal({ open, children, onClose }) {
             http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/createTask', data)
                 .then(res => {
                     if (res.data.message === "Creation Successful") {
-                        // Force reloads the webpage to refresh events
-                        // Band-aid fix
-                        // window.location.reload();
                         onClose();
                     } else {
                         alert("Sorry, there was a problem creating that task.");
@@ -66,7 +63,6 @@ export default function Modal({ open, children, onClose }) {
         <>
             <div style={OVERLAY_STYLES}/>
             <div style={MODAL_STYLES}>
-                <button onClick={onClose}>Cancel</button>
                 <div style={INPUT_STYLES}>
                     <input
                         type="text"
@@ -88,7 +84,8 @@ export default function Modal({ open, children, onClose }) {
                         placeholder="Enter Priority Level"
                     />
                 </div>
-                <button onClick={() => addTask()}>Add Task</button>
+                <button style={{display: 'inline'}} onClick={() => addTask()}>Create Task</button>
+                <button style={{display: 'inline', marginLeft: '45px'}} onClick={onClose}>Cancel</button>
                 {children}
             </div>
         </>,
