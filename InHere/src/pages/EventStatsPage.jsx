@@ -7,9 +7,9 @@ import Legend from "../components/Event Stats/Legend.jsx";
 import http from "../http-common.js";
 
 // Display Event Stats Page:
-function EventStatsPage (props) {
+function EventStatsPage () {
     // Global Declarations:
-    const TEST_USER_ID = props.userToken; // TODO: REMOVE HARDCODE USER ID
+    // const TEST_USER_ID = props.userToken; // TODO: REMOVE HARDCODE USER ID
 
     const [eventStats, setEventStats] = useState(null); // holds response from the database
 
@@ -46,7 +46,8 @@ function EventStatsPage (props) {
     // Get Task Completion Data:
     useEffect(() =>
     {
-        fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
+        const userID = sessionStorage.getItem("token");
+        fetchData(userID); // Call the fetchData function with the desired UserID
     }, []); // Empty dependency array ensures this effect runs only once after initial render
 
     if (!eventStats) {
