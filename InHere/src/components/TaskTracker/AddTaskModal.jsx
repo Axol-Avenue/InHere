@@ -32,7 +32,7 @@ export default function Modal({ open, children, onClose }) {
     function addTask() {
 
         let data = {
-            userID: 42,
+            userID: sessionStorage.getItem("UserID"),
             title: document.getElementById('title').value,
             date: document.getElementById('dueDate').value,
             priority: document.getElementById('priority').value

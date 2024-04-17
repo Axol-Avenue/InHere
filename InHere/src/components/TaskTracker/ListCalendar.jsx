@@ -6,6 +6,7 @@ import React, {useState} from "react";
 
 function Calendar() {
 
+    const currentUser = sessionStorage.getItem("UserID");
     const getEvents = (fetchInfo) => {
 
         // Sets fetchInfo's end date to the day before
@@ -13,7 +14,7 @@ function Calendar() {
         (fetchInfo.end).setDate((fetchInfo.end).getDate() - 1);
 
         let data = {
-            userID: 42,
+            userID: currentUser,
             startDate: (fetchInfo.start).getFullYear() + "-" + ((fetchInfo.start).getMonth() + 1) + "-" + (fetchInfo.start).getDate(),
             endDate: (fetchInfo.end).getFullYear() + "-" + ((fetchInfo.end).getMonth() + 1) + "-" + (fetchInfo.end).getDate()
         }
@@ -44,7 +45,7 @@ function Calendar() {
     const deleteTask = (currentTask) => {
 
         let data = {
-            userID: 42,
+            userID: currentUser,
             taskID: currentTask
         }
 
@@ -53,7 +54,7 @@ function Calendar() {
                 if (res.data.message === "Deletion Successful") {
                     // Force reloads the webpage to refresh events
                     // Band-aid fix
-                    window.location.reload();
+                    setRefresh(refresh + 1)
                 } else {
                     alert("Sorry, there was a problem deleting that task.");
                 }
@@ -83,7 +84,8 @@ function Calendar() {
         </div>
     }
 
-    const [isOpen, setIsOpen ] = useState(false)
+    const [isOpen, setIsOpen ] = useState(false);
+    const [refresh, setRefresh] = React.useState(0);
 
     return <div>
         <FullCalendar
