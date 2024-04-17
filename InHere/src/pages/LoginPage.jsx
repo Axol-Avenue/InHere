@@ -3,9 +3,8 @@ import React, {useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import LoginValidation from "../components/Login/LoginValidation.jsx";
 import http from "../http-common.js";
-import PropTypes from "prop-types";
 
-function LoginPage ({setToken}){
+function LoginPage (){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [inputErrors, setInputErrors] = useState({});
@@ -41,7 +40,7 @@ function LoginPage ({setToken}){
                     console.log(res);
                     if(res.data.message === 'Authentication Successful') {
                         // Set UserID Token:
-                        setToken(res.data.userID);
+                        sessionStorage.setItem('token', res.data.userID)
 
                         // Navigate to Home Page:
                         navigate("/homePage");
@@ -99,10 +98,6 @@ function LoginPage ({setToken}){
             </form>
         </div>
     )
-}
-
-LoginPage.propTypes = {
-    setToken: PropTypes.func.isRequired
 }
 
 

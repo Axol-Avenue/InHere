@@ -9,22 +9,18 @@ import LoginPage from "./pages/LoginPage.jsx";
 import Layout from "./components/Layout/Layout.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 
-import useToken from "./components/Login/useToken.jsx";
-
 
 function App() {
-    // Create Global Variable to store UserIDToken
-    const {token, setToken} = useToken();
 
     return (
         <div className="App">
                 <Routes>
-                    <Route path="/" exact element={ <LoginPage setToken={setToken}/> }/>
+                    <Route path="/" exact element={ <LoginPage/> }/>
                     <Route path="/signUp" element={ <SignUpPage/> }/>
                     <Route element={<Layout/>}>
                         <Route path="/homePage" element={ <HomePage/> }/>
                         <Route path="/taskTracker" element={ <TaskTrackerPage/> }/>
-                        <Route path="/eventStats" element={ <EventStatsPage userToken={token}/> }/>
+                        <Route path="/eventStats" element={ <EventStatsPage /> }/>
                         <Route path="/calendar" element={ <CalendarPage/> }/>
                     </Route>
                 </Routes>
