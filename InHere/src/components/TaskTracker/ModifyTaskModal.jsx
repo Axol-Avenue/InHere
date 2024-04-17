@@ -1,5 +1,6 @@
-import React from "react";
 import ReactDom from "react-dom";
+import http from "../../http-common.js";
+import TaskValidation from "./AddTaskValidation.jsx";
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -25,34 +26,67 @@ const INPUT_STYLES = {
     padding: '10px'
 }
 
-export default function Modal({ open, children, onClose }) {
+export default function Modal2({ open, props, onClose }) {
     if (!open) return null
+
+    function modifyTask() {
+
+        let data = {
+            taskID: props,
+            userID: sessionStorage.getItem("UserID"),
+            title: document.getElementById('title').value,
+            date: document.getElementById('dueDate').value,
+            priority: document.getElementById('priority').value
+        }
+
+        const err = TaskValidation(data.title, data.date, data.priority);
+
+        if(err.title === "" && err.dueDate === "" && err.priority === "") {
+
+            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/updateTask', data)
+                .then(res => {
+                    if (res.data.message === "Modification Successful") {
+                        onClose();
+                    } else {
+                        alert("Sorry, there was a problem modifying that task.");
+                    }
+                })
+                .catch(err => {
+                    console.log("axios error (listCalendar)");
+                    console.log(err)
+                });
+        } else {
+            alert(err.title + err.dueDate + err.priority);
+        }
+    }
 
     return ReactDom.createPortal(
         <>
             <div style={OVERLAY_STYLES}/>
             <div style={MODAL_STYLES}>
-                <button onClick={onClose}>Cancel</button>
                 <div style={INPUT_STYLES}>
                     <input
                         type="text"
-                        placeholder="Enter Event Title"
+                        id="title"
+                        placeholder="Enter Task Title"
                     />
                 </div>
                 <div style={INPUT_STYLES}>
                     <input
                         type="text"
-                        placeholder="Enter Start date"
+                        id="dueDate"
+                        placeholder="Enter Due Date"
                     />
                 </div>
                 <div style={INPUT_STYLES}>
                     <input
                         type="text"
-                        placeholder="Enter End date"
+                        id="priority"
+                        placeholder="Enter Priority Level"
                     />
                 </div>
-                <button>Add Event</button>
-                {children}
+                <button style={{display: 'inline'}} onClick={() => modifyTask()}>Modify Task</button>
+                <button style={{display: 'inline', marginLeft: '45px'}} onClick={onClose}>Cancel</button>
             </div>
         </>,
         document.getElementById("portal")

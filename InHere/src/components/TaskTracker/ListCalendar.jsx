@@ -2,6 +2,7 @@ import FullCalendar from "@fullcalendar/react";
 import listPlugin from "@fullcalendar/list";
 import http from "../../http-common.js";
 import Modal from "./AddTaskModal.jsx";
+import Modal2 from "./ModifyTaskModal.jsx";
 import React, {useState} from "react";
 
 function Calendar() {
@@ -65,10 +66,6 @@ function Calendar() {
             });
     }
 
-    const updateTask = (currentTask) => {
-        console.log(currentTask);
-    }
-
     function customEvents(args) {
 
         const currentTask = args.event.extendedProps.taskID;
@@ -79,13 +76,18 @@ function Calendar() {
             <button onClick={() => deleteTask(currentTask)}
                     style={{border: 'none', float: 'right'}}>Delete Task</button>
 
-            <button onClick={() => updateTask(currentTask)}
+            <button onClick={() => {
+                setCurrentTask(currentTask)
+                setIsOpen2(true)}
+            }
                     style={{border: 'none', float: 'right', marginRight: '10px'}}>Modify Task</button>
         </div>
     }
 
     const [isOpen, setIsOpen ] = useState(false);
+    const [isOpen2, setIsOpen2 ] = useState(false);
     const [refresh, setRefresh] = React.useState(0);
+    const [currentTask, setCurrentTask] = React.useState(0);
 
     return <div>
         <FullCalendar
@@ -96,8 +98,9 @@ function Calendar() {
             events={(fetchInfo) => getEvents(fetchInfo)}
             eventContent={(args) => customEvents(args)}
         />
-        <button onClick={() => setIsOpen(true)}>Add Event</button>
+        <button onClick={() => setIsOpen(true)}>Create Task</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
+        <Modal2 open={isOpen2} props={currentTask} onClose={() => setIsOpen2(false)}></Modal2>
     </div>
 }
 
