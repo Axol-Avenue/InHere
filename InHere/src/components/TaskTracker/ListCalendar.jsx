@@ -24,10 +24,12 @@ function Calendar() {
             .then(res => {
 
                 let events = [];
-                for (var i = 0; i < res.data.events.length; i++) {
+                let priorityColor = ["light-blue", "orange", "red"];
+                for (let i = 0; i < res.data.events.length; i++) {
                     events.push({
                         title: (res.data.events)[i].Title,
                         start: ((res.data.events)[i].DueDate).split("T")[0],
+                        backgroundColor: priorityColor[(res.data.events)[i].PriorityID - 1],
                         extendedProps: {
                             taskID: (res.data.events)[i].TaskID,
                             status: (res.data.events)[i].Status,
@@ -97,6 +99,7 @@ function Calendar() {
             displayEventTime={false}
             events={(fetchInfo) => getEvents(fetchInfo)}
             eventContent={(args) => customEvents(args)}
+            eventOrder={"-priority"}
         />
         <button onClick={() => setIsOpen(true)}>Create Task</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
