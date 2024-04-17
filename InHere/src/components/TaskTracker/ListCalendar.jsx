@@ -1,12 +1,10 @@
 import FullCalendar from "@fullcalendar/react";
 import listPlugin from "@fullcalendar/list";
 import http from "../../http-common.js";
+import Modal from "./AddTaskModal.jsx";
+import React, {useState} from "react";
 
 function Calendar() {
-
-    const createTask = () => {
-
-    }
 
     const getEvents = (fetchInfo) => {
 
@@ -44,7 +42,26 @@ function Calendar() {
     };
 
     const deleteTask = (currentTask) => {
-        console.log(currentTask);
+
+        let data = {
+            userID: 42,
+            taskID: currentTask
+        }
+
+        http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/deleteTask', data)
+            .then(res => {
+                if (res.data.message === "Deletion Successful") {
+                    // Force reloads the webpage to refresh events
+                    // Band-aid fix
+                    window.location.reload();
+                } else {
+                    alert("Sorry, there was a problem deleting that task.");
+                }
+            })
+            .catch(err => {
+                console.log("axios error (listCalendar)");
+                console.log(err)
+            });
     }
 
     const updateTask = (currentTask) => {
@@ -66,6 +83,8 @@ function Calendar() {
         </div>
     }
 
+    const [isOpen, setIsOpen ] = useState(false)
+
     return <div>
         <FullCalendar
             plugins={[listPlugin]}
@@ -75,6 +94,8 @@ function Calendar() {
             events={(fetchInfo) => getEvents(fetchInfo)}
             eventContent={(args) => customEvents(args)}
         />
+        <button onClick={() => setIsOpen(true)}>Add Event</button>
+        <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
     </div>
 }
 

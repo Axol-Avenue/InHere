@@ -1,5 +1,6 @@
-import React from "react";
 import ReactDom from "react-dom";
+import http from "../../http-common.js";
+import TaskValidation from "./AddTaskValidation.jsx";
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -28,6 +29,39 @@ const INPUT_STYLES = {
 export default function Modal({ open, children, onClose }) {
     if (!open) return null
 
+    function addTask() {
+
+        let data = {
+            userID: 42,
+            title: document.getElementById('title').value,
+            date: document.getElementById('dueDate').value,
+            priority: document.getElementById('priority').value
+        }
+
+        const err = TaskValidation(data.title, data.date, data.priority);
+
+        if(err.title === "" && err.dueDate === "" && err.priority === "") {
+
+            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/createTask', data)
+                .then(res => {
+                    if (res.data.message === "Creation Successful") {
+                        // Force reloads the webpage to refresh events
+                        // Band-aid fix
+                        // window.location.reload();
+                        onClose();
+                    } else {
+                        alert("Sorry, there was a problem creating that task.");
+                    }
+                })
+                .catch(err => {
+                    console.log("axios error (listCalendar)");
+                    console.log(err)
+                });
+        } else {
+            alert(err.title + err.dueDate + err.priority);
+        }
+    }
+
     return ReactDom.createPortal(
         <>
             <div style={OVERLAY_STYLES}/>
@@ -36,22 +70,25 @@ export default function Modal({ open, children, onClose }) {
                 <div style={INPUT_STYLES}>
                     <input
                         type="text"
-                        placeholder="Enter Event Title"
+                        id="title"
+                        placeholder="Enter Task Title"
                     />
                 </div>
                 <div style={INPUT_STYLES}>
                     <input
                         type="text"
-                        placeholder="Enter Start date"
+                        id="dueDate"
+                        placeholder="Enter Due Date"
                     />
                 </div>
                 <div style={INPUT_STYLES}>
                     <input
                         type="text"
-                        placeholder="Enter End date"
+                        id="priority"
+                        placeholder="Enter Priority Level"
                     />
                 </div>
-                <button>Add Event</button>
+                <button onClick={() => addTask()}>Add Task</button>
                 {children}
             </div>
         </>,
