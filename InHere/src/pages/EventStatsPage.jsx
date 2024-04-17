@@ -7,9 +7,9 @@ import Legend from "../components/Event Stats/Legend.jsx";
 import http from "../http-common.js";
 
 // Display Event Stats Page:
-function EventStatsPage () {
+function EventStatsPage (props) {
     // Global Declarations:
-    const TEST_USER_ID = 65; // TODO: REMOVE HARDCODE USER ID
+    const TEST_USER_ID = props.userToken; // TODO: REMOVE HARDCODE USER ID
 
     const [eventStats, setEventStats] = useState(null); // holds response from the database
 

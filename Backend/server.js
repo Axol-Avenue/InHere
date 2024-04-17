@@ -39,7 +39,7 @@ app.options('*', cors())
 // Sign-in Post
 app.post('/', (req, res) => {
 
-    const sql = "SELECT `Password` FROM User WHERE `Username` = ?";
+    const sql = "SELECT `Password`,`UserID` FROM User WHERE `Username` = ?";
 
     db.query(sql, req.body.username, (err, result) => {
         if(err)
@@ -49,7 +49,10 @@ app.post('/', (req, res) => {
         }
         if(result.length > 0) {
             if (bcrypt.compareSync(req.body.password, Object.values(Object.values(result).at(0)).at(0))) {
-                return res.status(200).json({ message: "Authentication Successful" });
+                return res.status(200).json({
+                    message: "Authentication Successful",
+                    userID: result[0].UserID
+                });
             }
             return res.json({ error: "Password Incorrect" });
         } else {
