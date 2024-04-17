@@ -40,7 +40,7 @@ function LoginPage (){
                     console.log(res);
                     if(res.data.message === 'Authentication Successful') {
                         // Set UserID Token:
-                        sessionStorage.setItem('token', res.data.userID)
+                        sessionStorage.setItem('UserID', res.data.userID);
 
                         // Navigate to Home Page:
                         navigate("/homePage");
