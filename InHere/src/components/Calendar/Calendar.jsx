@@ -41,13 +41,15 @@ function Calendar() {
             ]
         ;*/
 
+    const currentUser = sessionStorage.getItem("UserID");
+    console.log("Current User = " + sessionStorage.getItem("UserID"));
     const getEvents = () => {
 
         let data = {
-            userID: 42
+            userID: currentUser
         }
 
-        return http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/calendar', data)
+        return http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/readEvents', data)
             .then(res => {
                 console.log(res.data.events[0].Data);
                 return(res.data.events[0].Data);
@@ -60,7 +62,7 @@ function Calendar() {
 
     const [isOpen, setIsOpen ] = useState(false)
 
-    return <div>
+    return <div style={{padding: '10px', flexGrow: '1'}}>
         <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
             initialView={'dayGridMonth'}
@@ -70,6 +72,7 @@ function Calendar() {
                 end: "dayGridMonth,timeGridWeek,timeGridDay"
             }}
             height={"89vh"}
+            style={{width: '100%'}}
             events={getEvents}
         />
         <button onClick={() => setIsOpen(true)}>Add Event</button>
