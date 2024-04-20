@@ -8,9 +8,6 @@ import http from "../http-common.js";
 
 // Display Event Stats Page:
 function EventStatsPage () {
-    // Global Declarations:
-    const TEST_USER_ID = 65; // TODO: REMOVE HARDCODE USER ID
-
     const [eventStats, setEventStats] = useState(null); // holds response from the database
 
 
@@ -46,7 +43,9 @@ function EventStatsPage () {
     // Get Task Completion Data:
     useEffect(() =>
     {
-        fetchData(TEST_USER_ID); // Call the fetchData function with the desired UserID
+        const userID = sessionStorage.getItem("UserID");
+
+        fetchData(userID); // Call the fetchData function with the desired UserID
     }, []); // Empty dependency array ensures this effect runs only once after initial render
 
     if (!eventStats) {

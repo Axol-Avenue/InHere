@@ -6,7 +6,10 @@ function LogoutButton() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // TODO: add actual deauthentication
+        // Deauthentication:
+        sessionStorage.removeItem("UserID");
+
+        // Navigate back to login page:
         navigate('/');
     };
 
