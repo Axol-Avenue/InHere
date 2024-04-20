@@ -6,9 +6,10 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 export const navData = [
     {
         id: 0,
-        text: "Home        ",
-        link: "/homePage",
-        icon: <HomeIcon/>
+        text: "Calendar        ",
+        link: "/calendar",
+        icon: <CalendarMonthIcon/>
+
     },
     {
         id: 1,
@@ -24,8 +25,9 @@ export const navData = [
     },
     {
         id: 3,
-        text: "Calendar        ",
-        link: "/calendar",
-        icon: <CalendarMonthIcon/>
+        text: "Account        ",
+        link: "/accountPage",
+        icon: <HomeIcon/>
+
     }
 ]

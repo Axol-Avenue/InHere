@@ -42,8 +42,7 @@ function LoginPage (){
                         // Set UserID Token:
                         sessionStorage.setItem('UserID', res.data.userID);
 
-                        // Navigate to Home Page:
-                        navigate("/homePage");
+                        navigate("/calendar");
                     } else if (res.data.error === 'Password Incorrect') {
                         alert("Password incorrect, please try again");
                     }
@@ -63,39 +62,43 @@ function LoginPage (){
 
 
     return (
-        <div className={styles.wrapper}>
-            <h1>Login</h1>
-            <form action="" onSubmit={handleSubmit}>
-                <div className={styles.input}>
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        // required
-                    />
-                    {inputErrors.username && <span className={styles.formErrors}>{inputErrors.username}</span>}
-                </div>
-                <div className={styles.input}>
-                    <input
-                        type="text"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        // required
-                    />
-                    {inputErrors.password && <span className={styles.formErrors}>{inputErrors.password}</span>}
-                </div>
+        <div class={styles.background}>
+            <div className={styles.wrapper}>
+                <form action="" onSubmit={handleSubmit}>
+                    <h1 className={styles.text} style={{fontSize: 48}}>Log<i><b>InHere</b></i></h1>
+                    <div className={styles.input}>
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            // required
+                        />
+                        {inputErrors.username && <span className={styles.formErrors}>{inputErrors.username}</span>}
+                    </div>
+                    <div className={styles.input}>
+                        <input
+                            type="text"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            // required
+                        />
+                        {inputErrors.password && <span className={styles.formErrors}>{inputErrors.password}</span>}
+                    </div>
 
-                <button type="submit" className={styles.button}>Log In</button>
+                    <button type="submit" className={styles.button}>Log In</button>
 
-                <div className='registerLink'>
-                    <p></p>
-                    <p>First time in here?
-                        <Link to="/signUp">Sign Up!</Link>
-                    </p>
-                </div>
-            </form>
+                    <div className='registerLink'>
+                        <p></p>
+                        <div className={styles.text}>
+                            <p style={{ color: '#3a683b' }}>First time?
+                                <Link to="/signUp" style={{ color: '#345a35' }}> Sign Up!</Link>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }
