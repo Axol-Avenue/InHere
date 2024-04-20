@@ -39,6 +39,9 @@ function LoginPage (){
 
                     console.log(res);
                     if(res.data.message === 'Authentication Successful') {
+                        // Set UserID Token:
+                        sessionStorage.setItem('UserID', res.data.userID);
+
                         navigate("/calendar");
                     } else if (res.data.error === 'Password Incorrect') {
                         alert("Password incorrect, please try again");
