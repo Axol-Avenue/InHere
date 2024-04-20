@@ -2,7 +2,7 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import 'bootswatch/dist/darkly/bootstrap.min.css';
+//import 'bootswatch/dist/darkly/bootstrap.min.css';
 import "./App.css";
 
 

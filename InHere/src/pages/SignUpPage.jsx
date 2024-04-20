@@ -50,42 +50,44 @@ function SignUpPage () {
     }
 
     return (
-        <div className={styles.wrapper}>
-            <h1>Sign Up</h1>
-            <form action="" onSubmit={handleSubmit}>
-                <div className={styles.input}>
-                    <input
-                        type="text"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        // required
-                    />
-                    {inputErrors.email && <span className={styles.formErrors}>{inputErrors.email}</span>}
-                </div>
-                <div className={styles.input}>
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        // required
-                    />
-                    {inputErrors.username && <span className={styles.formErrors}>{inputErrors.username}</span>}
-                </div>
-                <div className={styles.input}>
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        // required
-                    />
-                    {inputErrors.password && <span className={styles.formErrors}>{inputErrors.password}</span>}
-                </div>
+        <div className={styles.background}>
+            <div className={styles.wrapper}>
+                <form action="" onSubmit={handleSubmit}>
+                    <h1 className={styles.text} style={{fontSize: 48}}>Sign Up</h1>
+                    <div className={styles.input}>
+                        <input
+                            type="text"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            // required
+                        />
+                        {inputErrors.email && <span className={styles.formErrors}>{inputErrors.email}</span>}
+                    </div>
+                    <div className={styles.input}>
+                        <input
+                            type="text"
+                            placeholder="Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            // required
+                        />
+                        {inputErrors.username && <span className={styles.formErrors}>{inputErrors.username}</span>}
+                    </div>
+                    <div className={styles.input}>
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            // required
+                        />
+                        {inputErrors.password && <span className={styles.formErrors}>{inputErrors.password}</span>}
+                    </div>
 
-                <button type="submit" className={styles.button}>Create Account</button>
-            </form>
+                    <button type="submit" className={styles.button}>Create Account</button>
+                </form>
+            </div>
         </div>
     )
 }

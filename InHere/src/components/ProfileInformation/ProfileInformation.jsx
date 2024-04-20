@@ -57,7 +57,6 @@ function ProfileInformation(){
             </form>
         </Card>
     )
-
 }
 
 export default ProfileInformation;
