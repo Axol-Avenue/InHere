@@ -248,6 +248,7 @@ app.post('/addEvent', (req, res) => {
         }
 
         if(result.length > 0) {
+            console.log(result);
             const userData = JSON.parse(result[0].Data);
 
             // Find max event ID in JSON
