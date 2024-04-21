@@ -263,13 +263,13 @@ app.post('/addEvent', (req, res) => {
             const addEventSql = "UPDATE Calendar SET 'Data' = ? WHERE 'UserID' = ?";
             db.query(addEventSql, [updatedData, req.body.userID], (updateErr, updateResult) => {
                 if (updateErr) {
-                    console.error("Error updating user's events in the databse:", updateErr);
+                    console.error("Error updating user's events in the database:", updateErr);
                     return res.status(500).json({ error: "Error updating user's events in the database" });
                 }
-                return res.status(200).json({ message: 'Event added successfully' });
+                return res.status(200).json({ message: "Event added successfully" });
             });
         } else {
-            res.status(404).json({ error: "User not found" });
+            return res.status(404).json({ error: "User not found" });
         }
     })
 })
