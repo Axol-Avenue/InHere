@@ -40,6 +40,18 @@ function Calendar() {
                 }
             ]
         ;*/
+    const BUTTON_STYLES = {
+        zIndex: '1000',
+        position: 'absolute',
+        right: '15px',
+        bottom: '25px',
+        fontSize: '40px',
+        color: 'white',
+        backgroundColor: '#4caf50',
+        borderRadius: '50%',
+        width: '50px',
+        height: '50px'
+    }
 
     const currentUser = sessionStorage.getItem("UserID");
     console.log("Current User = " + sessionStorage.getItem("UserID"));
@@ -75,7 +87,7 @@ function Calendar() {
             style={{width: '100%'}}
             events={getEvents}
         />
-        <button onClick={() => setIsOpen(true)}>Add Event</button>
+        <button style={BUTTON_STYLES} onClick={() => setIsOpen(true)}>+</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
     </div>
 }
