@@ -265,7 +265,7 @@ app.post('/addEvent', (req, res) => {
                     console.error("Error updating user's events in the databse:", updateErr);
                     return res.status(500).json({ error: "Error updating user's events in the database" });
                 }
-                res.status(200).json({ message: 'Event added successfully' });
+                return res.status(200).json({ message: 'Event added successfully' });
             });
         } else {
             res.status(404).json({ error: "User not found" });
