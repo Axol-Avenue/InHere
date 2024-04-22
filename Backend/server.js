@@ -230,6 +230,24 @@ app.post('/readEvents', (req, res) => {
     })
 })
 
+// Add new event to calendar
+app.post('/addEvent', (req, res) => {
+    const events = req.body.events;
+    const userID = req.body.userID;
+
+    const sql = "UPDATE Calendar SET 'Data' = ? WHERE 'UserID' = ?";
+
+    // Query to update database with updated json of events
+    db.query(sql, [events, userID], (err, result) => {
+        if(err) {
+            console.error("Error updating events in the database:", err);
+            return res.status(500).json({ error: "Error updating events in the database" });
+        }
+        return res.status(200).json({ message: "Events updated successfully" });
+    })
+})
+
+/*
 // Add Calendar Events
 app.post('/addEvent', (req, res) => {
     const newEvent = {
@@ -272,7 +290,7 @@ app.post('/addEvent', (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
     })
-})
+})*/
 
 // ---------------------------
 // Event Statistics API Call::
