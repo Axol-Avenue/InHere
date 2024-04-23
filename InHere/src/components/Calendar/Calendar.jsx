@@ -45,12 +45,12 @@ function Calendar() {
         position: 'absolute',
         right: '15px',
         bottom: '25px',
-        fontSize: '40px',
+        fontSize: '80px',
         color: 'white',
         backgroundColor: '#4caf50',
         borderRadius: '50%',
-        width: '50px',
-        height: '50px'
+        width: '100px',
+        height: '100px'
     }
 
     const currentUser = sessionStorage.getItem("UserID");
