@@ -8,6 +8,20 @@ import React, {useState} from "react";
 function Calendar() {
 
     const currentUser = sessionStorage.getItem("UserID");
+
+    const BUTTON_STYLES = {
+        zIndex: '1000',
+        position: 'absolute',
+        right: '15px',
+        bottom: '25px',
+        fontSize: '80px',
+        color: 'white',
+        backgroundColor: '#4caf50',
+        borderRadius: '50%',
+        width: '100px',
+        height: '100px'
+    }
+
     const getEvents = (fetchInfo) => {
 
         // Sets fetchInfo's end date to the day before
@@ -130,7 +144,7 @@ function Calendar() {
             eventOrder={"-priority"}
             eventClick={(eventClickInfo) => completeTask(eventClickInfo)}
         />
-        <button onClick={() => setIsOpen(true)}>Create Task</button>
+        <button style={BUTTON_STYLES} onClick={() => setIsOpen(true)}>+</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
         <Modal2 open={isOpen2} props={currentTask} onClose={() => setIsOpen2(false)}></Modal2>
     </div>
