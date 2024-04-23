@@ -116,14 +116,13 @@ app.post('/createTask', (req, res) => {
     ]
 
     // Query to remove task entry
-    db.query(sql, values, (err, result) => {
+    db.query(sql, values, (err) => {
         if(err) {
             console.error("Error creating data in the database:", err);
             return res.status(500).json({ error: "Error creating data in the database" });
         }
         return res.status(200).json({
             message: "Creation Successful",
-            result: result
         });
     })
 })
@@ -170,14 +169,38 @@ app.post('/updateTask', (req, res) => {
     ]
 
     // Query to remove task entry
-    db.query(sql, values, (err, result) => {
+    db.query(sql, values, (err) => {
         if(err) {
             console.error("Error modifying data from the database:", err);
             return res.status(500).json({ error: "Error modifying data from the database" });
         }
         return res.status(200).json({
             message: "Modification Successful",
-            result: result
+        });
+    })
+})
+
+//TaskTracker Tasks Update Status:
+app.post('/completeTask', (req, res) => {
+
+    // UserID check is included just in case.
+    // We don't want somebody modifying a task that isn't theirs.
+    const sql = "UPDATE Task SET `Status` = ? WHERE `UserID` = ? AND `TaskID` = ?";
+
+    const values = [
+        req.body.newStatus,
+        req.body.userID,
+        req.body.taskID
+    ]
+
+    // Query to remove task entry
+    db.query(sql, values, (err) => {
+        if(err) {
+            console.error("Error modifying status data from the database:", err);
+            return res.status(500).json({ error: "Error modifying status data from the database" });
+        }
+        return res.status(200).json({
+            message: "Status Modification Successful",
         });
     })
 })
@@ -195,17 +218,18 @@ app.post('/deleteTask', (req, res) => {
     ]
 
     // Query to remove task entry
-    db.query(sql, values, (err, result) => {
+    db.query(sql, values, (err) => {
         if(err) {
             console.error("Error removing data from the database:", err);
             return res.status(500).json({ error: "Error removing data from the database" });
         }
         return res.status(200).json({
             message: "Deletion Successful",
-            result: result
         });
     })
 })
+
+
 
 // --------------------------
 // Calendar CRUD Operations::
