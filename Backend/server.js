@@ -237,7 +237,7 @@ app.post('/deleteTask', (req, res) => {
 
 // Read Calendar Events
 app.post('/readEvents', (req, res) => {
-    const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
+    const sql = "SELECT * FROM Event WHERE `UserID` = ?";
 
     // Query to get events
     db.query(sql, req.body.userID, (err, result) => {
@@ -254,28 +254,71 @@ app.post('/readEvents', (req, res) => {
     })
 })
 
-// Add new event to calendar
-app.post('/addEvent', (req, res) => {
+app.post('/createTask', (req, res) => {
+    const sql = "INSERT INTO Event (`Title`, `StartDate`, `EndDate`, `AllDay`, 'UserID') VALUES (?, ?, ?, ?, ?)";
 
     const values = [
-        req.body.events,
+        req.body.title,
+        req.body.startDate,
+        req.body.endDate,
+        req.body.allDay,
         req.body.userID
     ]
 
-    const sql = "UPDATE Calendar SET 'Data' = ? WHERE 'UserID' = ?";
-
-    // Query to update database with updated json of events
+    // Query to remove event entry
     db.query(sql, values, (err, result) => {
         if(err) {
-            console.error("Error updating events in the database:", err);
-            return res.status(500).json({ error: "Error updating events in the database" });
+            console.error("Error creating data in the database:", err);
+            return res.status(500).json({ error: "Error creating data in the database" });
         }
         return res.status(200).json({
-            message: "Events updated successfully",
+            message: "Creation Successful",
             result: result
         });
     })
 })
+
+// // Read Calendar Events
+// app.post('/readEvents', (req, res) => {
+//     const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
+//
+//     // Query to get events
+//     db.query(sql, req.body.userID, (err, result) => {
+//         if(err) {
+//             console.error("Error receiving data from the database:", err);
+//             return res.status(500).json({ error: "Error receiving data from the database" });
+//         }
+//         if(result.length > 0) {
+//             return res.status(200).json({
+//                 message: "Query Successful",
+//                 events: result
+//             });
+//         }
+//     })
+// })
+
+// Add new event to calendar
+// app.post('/addEvent', (req, res) => {
+//
+//     const values = [
+//         req.body.events,
+//         req.body.userID
+//     ]
+//
+//     const sql = "UPDATE Calendar SET 'Data' = ? WHERE 'UserID' = ?";
+//
+//     // Query to update database with updated json of events
+//     db.query(sql, values, (err, result) => {
+//         if(err) {
+//             console.error("Error updating events in the database:", err);
+//             return res.status(500).json({ error: "Error updating events in the database" });
+//         }
+//         return res.status(200).json({
+//             message: "Events updated successfully",
+//             result: result
+//         });
+//     })
+// })
 
 /*
 // Add Calendar Events
