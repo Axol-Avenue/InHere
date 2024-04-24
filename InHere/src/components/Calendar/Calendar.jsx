@@ -35,8 +35,8 @@ function Calendar() {
                     let allDayBool = JSON.parse((res.data.events)[i].AllDay);
                     events.push({
                         title: (res.data.events)[i].Title,
-                        start: ((res.data.events)[i].StartDate)[0],
-                        end: ((res.data.events)[i].EndDate)[0],
+                        start: ((res.data.events)[i].StartDate).replace("T", " ").split(".")[0],
+                        end: ((res.data.events)[i].EndDate).replace("T", " ").split(".")[0],
                         allDay: allDayBool,
                         extendedProps: {
                             eventID: (res.data.events)[i].EventID
