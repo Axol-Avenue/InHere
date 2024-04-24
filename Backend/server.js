@@ -254,7 +254,7 @@ app.post('/readEvents', (req, res) => {
     })
 })
 
-app.post('/createTask', (req, res) => {
+app.post('/createEvent', (req, res) => {
     const sql = "INSERT INTO Event (`Title`, `StartDate`, `EndDate`, `AllDay`, 'UserID') VALUES (?, ?, ?, ?, ?)";
 
     const values = [
