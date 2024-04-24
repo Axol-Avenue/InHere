@@ -8,6 +8,20 @@ import React, {useState} from "react";
 function Calendar() {
 
     const currentUser = sessionStorage.getItem("UserID");
+
+    const BUTTON_STYLES = {
+        zIndex: '1000',
+        position: 'absolute',
+        right: '15px',
+        bottom: '25px',
+        fontSize: '80px',
+        color: 'white',
+        backgroundColor: '#4caf50',
+        borderRadius: '50%',
+        width: '100px',
+        height: '100px'
+    }
+
     const getEvents = (fetchInfo) => {
 
         // Sets fetchInfo's end date to the day before
@@ -55,8 +69,6 @@ function Calendar() {
         http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/deleteTask', data)
             .then(res => {
                 if (res.data.message === "Deletion Successful") {
-                    // Force reloads the webpage to refresh events
-                    // Band-aid fix
                     setRefresh(refresh + 1)
                 } else {
                     alert("Sorry, there was a problem deleting that task.");
@@ -68,12 +80,42 @@ function Calendar() {
             });
     }
 
+    function completeTask(eventClickInfo) {
+
+        let data = {
+            userID: currentUser,
+            taskID: eventClickInfo.event.extendedProps.taskID,
+            newStatus: ((eventClickInfo.event.extendedProps.status + 1) % 2)
+        }
+
+        http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/completeTask', data)
+            .then(res => {
+                if (res.data.message === "Status Modification Successful") {
+                    setRefresh(refresh + 1)
+                } else {
+                    alert("Sorry, there was a problem modifying the status for that task.");
+                }
+            })
+            .catch(err => {
+                console.log("axios error (listCalendar)");
+                console.log(err)
+            });
+    }
+
     function customEvents(args) {
 
         const currentTask = args.event.extendedProps.taskID;
+        let eventTitle;
+
+        if (args.event.extendedProps.status) {
+            eventTitle = <a style={{ textDecoration: 'line-through' }}>{args.event.title}</a>
+        } else {
+            eventTitle = <a>{args.event.title}</a>;
+        }
 
         return <div>
-            <a>{args.event.title}</a>
+
+            {eventTitle}
 
             <button onClick={() => deleteTask(currentTask)}
                     style={{border: 'none', float: 'right'}}>Delete Task</button>
@@ -100,8 +142,9 @@ function Calendar() {
             events={(fetchInfo) => getEvents(fetchInfo)}
             eventContent={(args) => customEvents(args)}
             eventOrder={"-priority"}
+            eventClick={(eventClickInfo) => completeTask(eventClickInfo)}
         />
-        <button onClick={() => setIsOpen(true)}>Create Task</button>
+        <button style={BUTTON_STYLES} onClick={() => setIsOpen(true)}>+</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>
         <Modal2 open={isOpen2} props={currentTask} onClose={() => setIsOpen2(false)}></Modal2>
     </div>
