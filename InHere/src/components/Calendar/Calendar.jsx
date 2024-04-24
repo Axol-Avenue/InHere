@@ -7,39 +7,7 @@ import Modal from "./AddEventModal.jsx";
 import http from "../../http-common.js";
 
 function Calendar() {
-    // Event placeholders
-    /*const events = [
-        {
-            title: 'Event 1',
-            start: '2024-04-01',
-            end: '2024-04-02'
-        },
-        {
-            title: 'Event 2',
-            start: '2024-04-09',
-            end: '2024-04-11'
-        }
-    ];*/
 
-    /*const events =
-
-            [
-                {
-                    "id": "821",
-                    "end": "2024-04-06 14:00:00",
-                    "start": "2024-04-06 06:00:00",
-                    "title": "Test event",
-                    "allDay": "true"
-                },
-                {
-                    "id": "822",
-                    "end": "2024-04-10 21:00:00",
-                    "start": "2024-04-10 16:00:00",
-                    "title": "Test event 2",
-                    "allDay": ""
-                }
-            ]
-        ;*/
     const BUTTON_STYLES = {
         zIndex: '1000',
         position: 'absolute',
@@ -54,7 +22,6 @@ function Calendar() {
     }
 
     const currentUser = sessionStorage.getItem("UserID");
-    console.log("Current User = " + sessionStorage.getItem("UserID"));
     const getEvents = () => {
 
         let data = {
@@ -63,8 +30,20 @@ function Calendar() {
 
         return http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/readEvents', data)
             .then(res => {
-                console.log(res.data.events[0].Data);
-                return(res.data.events[0].Data);
+                let events = [];
+                for (let i = 0; i < res.data.events.length; i++) {
+                    let allDayBool = JSON.parse((res.data.events)[i].AllDay);
+                    events.push({
+                        title: (res.data.events)[i].Title,
+                        start: ((res.data.events)[i].StartDate).split("T")[0],
+                        end: ((res.data.events)[i].EndDate).split("T")[0],
+                        allDay: allDayBool,
+                        extendedProps: {
+                            eventID: (res.data.events)[i].EventID
+                        }
+                    });
+                }
+                return(events);
             })
             .catch(err => {
                 console.log("axios error (Calendar)");
@@ -85,7 +64,7 @@ function Calendar() {
             }}
             height={"89vh"}
             style={{width: '100%'}}
-            events={getEvents}
+            events={() => getEvents()}
         />
         <button style={BUTTON_STYLES} onClick={() => setIsOpen(true)}>+</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}></Modal>

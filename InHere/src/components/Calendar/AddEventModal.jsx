@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDom from "react-dom";
-import TaskValidation from "../TaskTracker/AddTaskValidation.jsx";
 import http from "../../http-common.js";
+//import EventValidation from "../TaskTracker/AddEventValidation.jsx";
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -39,15 +39,19 @@ export default function Modal({ open, children, onClose }) {
     function addEvent() {
 
         let data = {
-            userID: sessionStorage.getItem("UserID"),
             title: document.getElementById('title').value,
             startDate: document.getElementById('startDate').value,
-            endDate: document.getElementById('endDate').value
+            endDate: document.getElementById('endDate').value,
+            allDay: JSON.stringify(document.getElementById('allDay').checked),
+            userID: sessionStorage.getItem("UserID")
         }
 
-        if(true) {
+        // Set up for validating tasks
+        // const err = EventValidation(data.title, data.date, data.priority);
 
-            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/addEvent', data)
+        // true to be replaced with validation
+        if(true) {
+            http.post('https://ec2-18-223-107-62.us-east-2.compute.amazonaws.com:3307/createEvent', data)
                 .then(res => {
                     if (res.data.message === "Creation Successful") {
                         onClose();
@@ -56,11 +60,11 @@ export default function Modal({ open, children, onClose }) {
                     }
                 })
                 .catch(err => {
-                    console.log("axios error (addEventModal)");
+                    console.log("axios error (Add Event to Calendar)");
                     console.log(err)
                 });
         } else {
-            alert(err.title + err.dueDate + err.priority);
+            alert(err.title + err.startDate + err.endDate + err.allDay);
         }
     }
 
@@ -90,6 +94,14 @@ export default function Modal({ open, children, onClose }) {
                         type="text"
                         id="endDate"
                         placeholder="YYYY-MM-DD HH:mm:SS"
+                    />
+                </div>
+                <div style={INPUT_STYLES}>
+                    <h1 style={HEADER_STYLES}>Does this event last all day?</h1>
+                    <input
+                        type="checkbox"
+                        id="allDay"
+                        placeholder="true or false"
                     />
                 </div>
                 <button style={{display: 'inline'}} onClick={() => addEvent()}>Add Event</button>

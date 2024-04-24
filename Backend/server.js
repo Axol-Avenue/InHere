@@ -230,6 +230,7 @@ app.post('/readEvents', (req, res) => {
     })
 })
 
+// Create new Event
 app.post('/createEvent', (req, res) => {
     const sql = "INSERT INTO Event (`Title`, `StartDate`, `EndDate`, `AllDay`, `UserID`) VALUES (?, ?, ?, ?, ?)";
 
@@ -241,7 +242,7 @@ app.post('/createEvent', (req, res) => {
         req.body.userID
     ]
 
-    // Query to remove event entry
+    // Query to add new event entry
     db.query(sql, values, (err, result) => {
         if(err) {
             console.error("Error creating data in the database:", err);
@@ -253,93 +254,6 @@ app.post('/createEvent', (req, res) => {
         });
     })
 })
-
-// // Read Calendar Events
-// app.post('/readEvents', (req, res) => {
-//     const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
-//
-//     // Query to get events
-//     db.query(sql, req.body.userID, (err, result) => {
-//         if(err) {
-//             console.error("Error receiving data from the database:", err);
-//             return res.status(500).json({ error: "Error receiving data from the database" });
-//         }
-//         if(result.length > 0) {
-//             return res.status(200).json({
-//                 message: "Query Successful",
-//                 events: result
-//             });
-//         }
-//     })
-// })
-
-// Add new event to calendar
-// app.post('/addEvent', (req, res) => {
-//
-//     const values = [
-//         req.body.events,
-//         req.body.userID
-//     ]
-//
-//     const sql = "UPDATE Calendar SET 'Data' = ? WHERE 'UserID' = ?";
-//
-//     // Query to update database with updated json of events
-//     db.query(sql, values, (err, result) => {
-//         if(err) {
-//             console.error("Error updating events in the database:", err);
-//             return res.status(500).json({ error: "Error updating events in the database" });
-//         }
-//         return res.status(200).json({
-//             message: "Events updated successfully",
-//             result: result
-//         });
-//     })
-// })
-
-/*
-// Add Calendar Events
-app.post('/addEvent', (req, res) => {
-    const newEvent = {
-        id: null,
-        title: req.body.title,
-        start: req.body.startDate,
-        end: req.body.endDate
-    };
-
-    const sql = "SELECT `Data` FROM Calendar WHERE `UserID` = ?";
-    // Query to get events
-    db.query(sql, req.body.userID, (err, result) => {
-        if(err) {
-            console.error("Error receiving data from the database:", err);
-            return res.status(500).json({ error: "Error receiving data from the database" });
-        }
-
-        if(result.length > 0) {
-            console.log(result);
-            const userData = JSON.parse(result);
-
-            // Find max event ID in JSON
-            const maxEventID = userData.reduce((maxID, event) => {
-                return event.id > maxID ? event.id : maxID;
-            }, 0);
-            newEvent.id = maxEventID + 1;
-
-            userData.push(newEvent); // Add new event to existing array
-            const updatedData = JSON.stringify(userData);
-
-            const addEventSql = "UPDATE Calendar SET 'Data' = ? WHERE 'UserID' = ?";
-            db.query(addEventSql, [updatedData, req.body.userID], (updateErr, updateResult) => {
-                if (updateErr) {
-                    console.error("Error updating user's events in the database:", updateErr);
-                    return res.status(500).json({ error: "Error updating user's events in the database" });
-                }
-                return res.status(200).json({ message: "Event added successfully" });
-            });
-        } else {
-            return res.status(404).json({ error: "User not found" });
-        }
-    })
-})*/
 
 // ---------------------------
 // Event Statistics API Call::
